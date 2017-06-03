@@ -1,8 +1,6 @@
 package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -62,14 +60,14 @@ public class TabbedActivity extends AppCompatActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         ContextCompat.getDrawable(this, R.drawable.ic_history_white_48dp),
-                        ContextCompat.getColor(this, R.color.barcolor1)
+                        ContextCompat.getColor(this, R.color.colorAccent)
                 ).title(TITLE[0])
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
                         ContextCompat.getDrawable(this, R.drawable.ic_search_white_48dp),
-                        ContextCompat.getColor(this, R.color.barcolor2)
+                        ContextCompat.getColor(this, R.color.colorAccent2)
                 ).title(TITLE[1])
                         .build()
         );
@@ -120,7 +118,7 @@ public class TabbedActivity extends AppCompatActivity {
                 case 0:
                     return new ChartFragment();
                 case 1:
-                    return new ChartFragment();
+                    return new SearchFragment();
             }
             return null;
         }

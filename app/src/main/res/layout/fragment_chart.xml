@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <fhtw.bsa2.gafert_steiner.ue5_diaryapp.FullscreenLinearLayout
+        <fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout
             android:id="@+id/firstPage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,69 +25,74 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="240dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="18dp"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:layout_width="23dp"
                         android:layout_height="30dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="\ue106"
                         android:textAlignment="center"
                         android:textSize="24sp"
-                        app:emojiconAlignment="baseline" />
+                        app:srcCompat="@drawable/heart_eyes_emoji" />
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:layout_width="23dp"
                         android:layout_height="30dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="\ue057"
                         android:textAlignment="center"
                         android:textSize="24sp"
-                        app:emojiconAlignment="baseline" />
+                        app:srcCompat="@drawable/slightly_smiling_face_emoji" />
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:layout_width="23dp"
                         android:layout_height="30dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="\ue219"
                         android:textAlignment="center"
                         android:textSize="24sp"
-                        app:emojiconAlignment="baseline" />
+                        app:srcCompat="@drawable/confused_face_emoji" />
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:layout_width="23dp"
                         android:layout_height="30dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="\ue240"
                         android:textAlignment="center"
                         android:textSize="24sp"
-                        app:emojiconAlignment="baseline" />
+                        app:srcCompat="@drawable/sad_face_emoji" />
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:layout_width="23dp"
                         android:layout_height="30dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:text="\ue411"
                         android:textAlignment="center"
                         android:textSize="24sp"
-                        app:emojiconAlignment="baseline" />
+                        app:srcCompat="@drawable/loudly_crying_face_emoji" />
                 </LinearLayout>
 
-                <com.db.chart.view.BarChartView
+                <!--com.db.chart.view.BarChartView
                     android:id="@+id/hapinessChart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp">
 
-                </com.db.chart.view.BarChartView>
+                </com.db.chart.view.BarChartView-->
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <View
@@ -184,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:layout_marginTop="10dp"
-                android:text="Latest Entries"
+                android:text="Selected Entry"
                 android:textAlignment="center" />
 
             <ImageButton
@@ -197,10 +202,10 @@
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down_white_48dp" />
 
-        </fhtw.bsa2.gafert_steiner.ue5_diaryapp.FullscreenLinearLayout>
+        </fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout>
 
 
-        <fhtw.bsa2.gafert_steiner.ue5_diaryapp.FullscreenLinearLayout
+        <fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -213,7 +218,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="Latest Entries"
+                android:text="Selected Entry"
                 android:textAlignment="textStart"
                 android:textSize="20sp" />
 
@@ -250,7 +255,7 @@
 
             </FrameLayout>
 
-        </fhtw.bsa2.gafert_steiner.ue5_diaryapp.FullscreenLinearLayout>
+        </fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout>
 
     </LinearLayout>
 

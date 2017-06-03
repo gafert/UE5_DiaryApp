@@ -2,8 +2,6 @@ package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
 
 
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,14 +14,22 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.db.chart.model.BarSet;
-import com.db.chart.renderer.AxisRenderer;
-import com.db.chart.view.BarChartView;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+import java.util.List;
+
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DayAxisValueFormatter;
 
 
 /**
@@ -33,7 +39,7 @@ public class ChartFragment extends Fragment {
 
     public final static int FEELING_VERY_HAPPY = 20;
     public final static int FEELING_HAPPY = 10;
-    public final static int FEELING_NORMAL = 1;
+    public final static int FEELING_NORMAL = 0;
     public final static int FEELING_SAD = -10;
     public final static int FEELING_VERY_SAD = -20;
 
@@ -42,8 +48,7 @@ public class ChartFragment extends Fragment {
     ScrollView scrollView;
     ListView latestEntriesListView;
     ArrayAdapter<String> latestEntriesAdapter;  // Listenelemente hinzufügen
-    BarSet barGraphSet; // Add here elements to chart
-    BarChartView barGraphView; // Update the chart
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,11 +66,6 @@ public class ChartFragment extends Fragment {
         // Add things to a list
         latestEntriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_2, android.R.id.text1);
         latestEntriesListView.setAdapter(latestEntriesAdapter);
-
-        latestEntriesAdapter.add("You were sad");
-        latestEntriesAdapter.add("You were happy");
-        latestEntriesAdapter.add("You were very sad");
-        latestEntriesAdapter.add("You were the sadness");
 
         // Button to move to the list
         ImageButton latestEntriesButton = (ImageButton)rootView.findViewById(R.id.latestEntriesButton);
@@ -88,46 +88,106 @@ public class ChartFragment extends Fragment {
     }
 
     private void setupGraph(View rootView){
-        barGraphView = (BarChartView) rootView.findViewById(R.id.hapinessChart);
-
-        barGraphSet = new BarSet();
-        // Happiness -30 - 30 = 6 Stimmungen
-        barGraphSet.addBar("Monday", FEELING_HAPPY);
-        barGraphSet.addBar("Tuesday", FEELING_NORMAL);
-        barGraphSet.addBar("Wednesday", FEELING_VERY_HAPPY);
-        barGraphSet.addBar("Thursday", FEELING_SAD);
-        barGraphSet.addBar("Friday", FEELING_NORMAL);
-        barGraphSet.addBar("Saturday", FEELING_VERY_SAD);
-        barGraphSet.addBar("Sunday", FEELING_VERY_HAPPY);
 
         int[] colors = new int[2];
 
-        colors[0] = ContextCompat.getColor(getContext(), R.color.graphcolor1);
-        colors[1] = ContextCompat.getColor(getContext(), R.color.graphcolor2);
+        colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
+        colors[1] = ContextCompat.getColor(getContext(), R.color.colorAccent2);
 
-        barGraphSet.setGradientColor(colors, new float[]{FEELING_VERY_SAD, FEELING_VERY_HAPPY});
+        LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
 
-        barGraphView.setYAxis(false);
-        barGraphView.setXAxis(false);
+        List<Entry> happinessEntries = new ArrayList<>();
+        List<String> timeEntries = new ArrayList<>();
 
-        // Make a grid
-        Paint mPaint = new Paint();
-        mPaint.setColor(ContextCompat.getColor(getContext(), R.color.darkgrey));
-        mPaint.setStrokeWidth(5);
-        barGraphView.setGrid(6, 0, mPaint);
+        happinessEntries.add(new Entry(1, FEELING_NORMAL));
+        happinessEntries.add(new Entry(2, FEELING_SAD));
+        happinessEntries.add(new Entry(3, FEELING_NORMAL));
+        happinessEntries.add(new Entry(4, FEELING_VERY_SAD));
+        happinessEntries.add(new Entry(5, FEELING_SAD));
+        happinessEntries.add(new Entry(6, FEELING_HAPPY));
+        happinessEntries.add(new Entry(7, FEELING_VERY_HAPPY));
+        happinessEntries.add(new Entry(8, FEELING_NORMAL));
+        happinessEntries.add(new Entry(9, FEELING_SAD));
+        happinessEntries.add(new Entry(10, FEELING_HAPPY));
 
-        barGraphView.setAxisBorderValues(FEELING_VERY_SAD - 10, FEELING_VERY_HAPPY + 10);
-        barGraphView.setYLabels(AxisRenderer.LabelPosition.NONE);
-        barGraphView.setXLabels(AxisRenderer.LabelPosition.INSIDE);
-        barGraphView.setLabelsColor(Color.WHITE);
-        barGraphView.setFontSize(20);
+        timeEntries.add("Monday");
+        timeEntries.add("Tuesday");
+        timeEntries.add("Wednesday");
+        timeEntries.add("Thursday");
+        timeEntries.add("Friday");
+        timeEntries.add("Saturday");
+        timeEntries.add("Sunday");
+        timeEntries.add("Monday");
+        timeEntries.add("Tuesday");
+        timeEntries.add("Wednesday");
 
-        //barGraphView.setAxisLabelsSpacing(50);
-        //barGraphView.setAxisColor(ContextCompat.getColor(getContext(), R.color.grey));
-        //barGraphView.setAxisThickness(1);
+        LineDataSet happinessDateSet = new LineDataSet(happinessEntries, "Happiness");
+        happinessDateSet.setColor(colors[0]);
+        happinessDateSet.setCircleColor(colors[1]);
+        happinessDateSet.setCircleColorHole(Color.TRANSPARENT);
+        happinessDateSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        happinessDateSet.setHighlightEnabled(true); // allow highlighting for DataSet
+        happinessDateSet.setDrawHighlightIndicators(false);
 
-        barGraphView.addData(barGraphSet);
-        barGraphView.show();
+        List<ILineDataSet> dataSet = new ArrayList<ILineDataSet>();
+        dataSet.add(happinessDateSet);
+
+        LineData lineData = new LineData(dataSet);
+        lineData.setDrawValues(false);
+
+        // Add the lines to the chart
+        chart.setData(lineData);
+
+        // Disables Legend
+        chart.getLegend().setEnabled(false);
+
+        chart.getXAxis().setEnabled(true);
+        chart.getXAxis().setDrawAxisLine(false);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getXAxis().setTextColor(Color.WHITE);
+        chart.getXAxis().setValueFormatter(new DayAxisValueFormatter(chart));
+        chart.getXAxis().setGranularity(1);
+        chart.getXAxis().setLabelRotationAngle(45);
+        chart.getXAxis().setLabelCount(10);
+
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getAxisLeft().setDrawLabels(false);
+        chart.getAxisRight().setDrawLabels(false);
+        chart.getAxisLeft().setDrawAxisLine(false);
+        chart.getAxisRight().setDrawAxisLine(false);
+
+        // Remove Description
+        chart.setDescription(null);
+
+        // Color axis
+        chart.getAxisRight().setTextColor(Color.WHITE);
+        chart.getAxisLeft().setTextColor(Color.WHITE);
+
+        // Make the chart interactive
+        chart.setDragEnabled(true);
+        chart.setScaleXEnabled(true);
+        chart.setScaleYEnabled(false);
+
+        // Make a marker
+        ChartMarker elevationMarker = new ChartMarker(getActivity());
+        elevationMarker.setOffset(-(elevationMarker.getWidth() / 2), -(elevationMarker.getHeight() / 2));
+        chart.setMarker(elevationMarker);
+
+        chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                latestEntriesAdapter.clear();
+                latestEntriesAdapter.add("You selected: " + e.copy());
+                scrollView.smoothScrollTo(0, scrollView.getTop());
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
+        chart.invalidate();
 
     }
 

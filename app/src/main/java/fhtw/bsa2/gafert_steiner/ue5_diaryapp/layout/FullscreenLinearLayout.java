@@ -1,12 +1,10 @@
-package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
+package fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
