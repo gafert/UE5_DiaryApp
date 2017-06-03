@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1d1e23</color>
+    <color name="colorPrimaryDark">#101013</color>
+    <color name="colorAccent">#ae23ef</color>
+    <color name="colorAccent2">#951dce</color>
+
+    <color name="grey">#bdffffff</color>
+    <color name="darkgrey">#07ffffff</color>
+
+    <color name="barcolor1">@color/colorAccent</color>
+    <color name="barcolor2">@color/colorAccent2</color>
+
+    <color name="graphcolor1">@color/colorAccent</color>
+    <color name="graphcolor2">@color/colorAccent2</color>
+
+    <color name="gradientColor1">#24252b</color>
+    <color name="gradientColor2">#292a31</color>
+</resources>
