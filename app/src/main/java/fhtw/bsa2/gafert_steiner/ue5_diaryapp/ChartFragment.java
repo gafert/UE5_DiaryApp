@@ -31,17 +31,16 @@ import java.util.List;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DayAxisValueFormatter;
 
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_HAPPY;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_NORMAL;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_SAD;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_HAPPY;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_SAD;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ChartFragment extends Fragment {
-
-    public final static int FEELING_VERY_HAPPY = 20;
-    public final static int FEELING_HAPPY = 10;
-    public final static int FEELING_NORMAL = 0;
-    public final static int FEELING_SAD = -10;
-    public final static int FEELING_VERY_SAD = -20;
 
 
     LinearLayout firstPage;

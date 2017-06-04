@@ -17,7 +17,7 @@ import devlight.io.library.ntb.NavigationTabBar;
 public class TabbedActivity extends AppCompatActivity {
 
 
-    public final static String[] TITLE = {"Feelings", "Search"};
+    public final static String[] TITLE = {"Feelings", "Add Entry", "Search"};
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -66,9 +66,16 @@ public class TabbedActivity extends AppCompatActivity {
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
+                        ContextCompat.getDrawable(this, R.drawable.ic_add_white_48dp),
+                        ContextCompat.getColor(this, R.color.colorAccent)
+                ).title(TITLE[1])
+                        .build()
+        );
+        models.add(
+                new NavigationTabBar.Model.Builder(
                         ContextCompat.getDrawable(this, R.drawable.ic_search_white_48dp),
                         ContextCompat.getColor(this, R.color.colorAccent2)
-                ).title(TITLE[1])
+                ).title(TITLE[2])
                         .build()
         );
 
@@ -118,6 +125,8 @@ public class TabbedActivity extends AppCompatActivity {
                 case 0:
                     return new ChartFragment();
                 case 1:
+                    return new AddFragment();
+                case 2:
                     return new SearchFragment();
             }
             return null;
@@ -126,7 +135,7 @@ public class TabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 2 total pages.
-            return 2;
+            return 3;
         }
     }
 }
