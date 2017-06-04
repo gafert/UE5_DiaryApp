@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout
+        <LinearLayout
             android:id="@+id/firstPage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -184,78 +184,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/colorAccent" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_marginTop="10dp"
-                android:text="Selected Entry"
-                android:textAlignment="center" />
-
-            <ImageButton
-                android:id="@+id/latestEntriesButton"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="bottom|center"
-                android:layout_marginTop="-10dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_keyboard_arrow_down_white_48dp" />
-
-        </fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout>
-
-
-        <fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="Selected Entry"
-                android:textAlignment="textStart"
-                android:textSize="20sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@color/colorAccent" />
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ListView
-                    android:id="@+id/LatestEntries"
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:nestedScrollingEnabled="true" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/backButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="25dp"
-                    android:layout_marginRight="20dp"
-                    android:clickable="true"
-                    android:elevation="5dp"
-                    android:src="@drawable/ic_keyboard_arrow_up_white_48dp" />
-
-            </FrameLayout>
-
-        </fhtw.bsa2.gafert_steiner.ue5_diaryapp.layout.FullscreenLinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

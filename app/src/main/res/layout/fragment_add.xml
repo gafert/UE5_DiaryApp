@@ -19,7 +19,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_add_element"
+            android:background="@drawable/rounded_rect_primarydark"
             android:orientation="vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="Pick a feeling"
                 android:textSize="18sp" />
 
@@ -42,21 +42,21 @@
 
             <LinearLayout
                 android:layout_width="380dp"
-                android:layout_height="wrap_content"
+                android:layout_height="68dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:checkedButton="@+id/normalButton"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/veryHappyButton"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="match_parent"
 
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
@@ -70,7 +70,7 @@
                         android:id="@+id/happyButton"
                         android:layout_width="match_parent"
 
-                        android:layout_height="70dp"
+                        android:layout_height="match_parent"
 
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
@@ -83,7 +83,7 @@
                     <RadioButton
                         android:id="@+id/normalButton"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
@@ -95,7 +95,7 @@
                     <RadioButton
                         android:id="@+id/sadButton"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
@@ -107,7 +107,7 @@
                     <RadioButton
                         android:id="@+id/verySadButton"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
@@ -128,7 +128,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_add_element"
+            android:background="@drawable/rounded_rect_primarydark"
             android:orientation="vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
@@ -138,7 +138,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="Date"
                 android:textSize="18sp" />
 
@@ -183,7 +183,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_add_element"
+            android:background="@drawable/rounded_rect_primarydark"
             android:orientation="vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
@@ -193,7 +193,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="Additional Information"
                 android:textSize="18sp" />
 
@@ -208,12 +208,28 @@
                 android:id="@+id/additionalInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_edit_text"
+                android:background="@drawable/rounded_rect_darkrey"
                 android:ems="10"
                 android:hint="Reason"
                 android:padding="10dp" />
 
         </LinearLayout>
+
+        <info.hoang8f.widget.FButton
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="40dp"
+            android:text="Collect Feelings"
+            app:buttonColor="@color/colorAccent" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </FrameLayout>
 
     </LinearLayout>
 

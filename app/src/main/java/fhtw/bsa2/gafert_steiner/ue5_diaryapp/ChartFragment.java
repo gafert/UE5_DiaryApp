@@ -1,19 +1,16 @@
 package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
 
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.github.mikephil.charting.charts.LineChart;
@@ -37,17 +34,8 @@ import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_SAD;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_SAD;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ChartFragment extends Fragment {
-
-
-    LinearLayout firstPage;
-    ScrollView scrollView;
-    ListView latestEntriesListView;
-    ArrayAdapter<String> latestEntriesAdapter;  // Listenelemente hinzufügen
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,49 +43,25 @@ public class ChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
-        firstPage = (LinearLayout) rootView.findViewById(R.id.firstPage);
-        scrollView = (ScrollView) rootView.findViewById(R.id.scrollView);
-        latestEntriesListView = (ListView)rootView.findViewById(R.id.LatestEntries);
-
         setupGraph(rootView);
         setupCircles(rootView);
-
-        // Add things to a list
-        latestEntriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_2, android.R.id.text1);
-        latestEntriesListView.setAdapter(latestEntriesAdapter);
-
-        // Button to move to the list
-        ImageButton latestEntriesButton = (ImageButton)rootView.findViewById(R.id.latestEntriesButton);
-        latestEntriesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollView.smoothScrollTo(0, scrollView.getBottom());
-            }
-        });
-
-        FloatingActionButton backButton = (FloatingActionButton)rootView.findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollView.smoothScrollTo(0, scrollView.getTop());
-            }
-        });
 
         return rootView;
     }
 
-    private void setupGraph(View rootView){
-
-        int[] colors = new int[2];
-
-        colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
-        colors[1] = ContextCompat.getColor(getContext(), R.color.colorAccent2);
+    private void setupGraph(View rootView) {
 
         LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
 
-        List<Entry> happinessEntries = new ArrayList<>();
-        List<String> timeEntries = new ArrayList<>();
+        // Colors for styling
+        int[] colors = new int[3];
+        colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
+        colors[1] = ContextCompat.getColor(getContext(), R.color.colorAccent2);
+        colors[2] = ContextCompat.getColor(getContext(), R.color.colorPrimary);
 
+        // Entry Array
+        // Later from saved data
+        List<Entry> happinessEntries = new ArrayList<>();
         happinessEntries.add(new Entry(1, FEELING_NORMAL));
         happinessEntries.add(new Entry(2, FEELING_SAD));
         happinessEntries.add(new Entry(3, FEELING_NORMAL));
@@ -109,92 +73,94 @@ public class ChartFragment extends Fragment {
         happinessEntries.add(new Entry(9, FEELING_SAD));
         happinessEntries.add(new Entry(10, FEELING_HAPPY));
 
-        timeEntries.add("Monday");
-        timeEntries.add("Tuesday");
-        timeEntries.add("Wednesday");
-        timeEntries.add("Thursday");
-        timeEntries.add("Friday");
-        timeEntries.add("Saturday");
-        timeEntries.add("Sunday");
-        timeEntries.add("Monday");
-        timeEntries.add("Tuesday");
-        timeEntries.add("Wednesday");
-
         LineDataSet happinessDateSet = new LineDataSet(happinessEntries, "Happiness");
-        happinessDateSet.setColor(colors[0]);
+
+        happinessDateSet.setColor(colors[0]);                       // Format Line
         happinessDateSet.setCircleColor(colors[1]);
-        happinessDateSet.setCircleColorHole(Color.TRANSPARENT);
-        happinessDateSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        happinessDateSet.setHighlightEnabled(true); // allow highlighting for DataSet
-        happinessDateSet.setDrawHighlightIndicators(false);
+        happinessDateSet.setCircleColorHole(colors[2]);
+        happinessDateSet.setCircleRadius(5);
+        happinessDateSet.setCircleHoleRadius(4);
+        happinessDateSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);    // Makes it line smooth
+        happinessDateSet.setHighlightEnabled(true);                 // Allow highlighting for DataSet
+        happinessDateSet.setDrawHighlightIndicators(false);         // Draw point on which someone clicked
 
         List<ILineDataSet> dataSet = new ArrayList<ILineDataSet>();
-        dataSet.add(happinessDateSet);
+        dataSet.add(happinessDateSet);                              // All lines are added to a dataSet
 
         LineData lineData = new LineData(dataSet);
         lineData.setDrawValues(false);
 
-        // Add the lines to the chart
-        chart.setData(lineData);
+        chart.setData(lineData);                                    // Add the lines to the chart
+        chart.getLegend().setEnabled(false);                        // Disables Legend
 
-        // Disables Legend
-        chart.getLegend().setEnabled(false);
-
-        chart.getXAxis().setEnabled(true);
         chart.getXAxis().setDrawAxisLine(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setTextColor(Color.WHITE);
-        chart.getXAxis().setValueFormatter(new DayAxisValueFormatter(chart));
-        chart.getXAxis().setGranularity(1);
+        chart.getXAxis().setValueFormatter(new DayAxisValueFormatter(chart));   // Format x values to see day
+        chart.getXAxis().setGranularity(1);                         // Just whole numbers are represented
         chart.getXAxis().setLabelRotationAngle(45);
-        chart.getXAxis().setLabelCount(10);
+        chart.getXAxis().setLabelCount(10);                         // Max labels in the chart
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);   // X Values are at the bottom of the chart
 
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        chart.getAxisLeft().setDrawLabels(false);
-        chart.getAxisRight().setDrawLabels(false);
+        chart.getAxisLeft().setDrawLabels(false);                   // Disable all y Axis
         chart.getAxisLeft().setDrawAxisLine(false);
+        chart.getAxisRight().setDrawLabels(false);
         chart.getAxisRight().setDrawAxisLine(false);
 
-        // Remove Description
-        chart.setDescription(null);
+        chart.setDescription(null);                                 // Remove Description
 
-        // Color axis
-        chart.getAxisRight().setTextColor(Color.WHITE);
+        chart.getAxisRight().setTextColor(Color.WHITE);             // Color axis white
         chart.getAxisLeft().setTextColor(Color.WHITE);
 
-        // Make the chart interactive
-        chart.setDragEnabled(true);
-        chart.setScaleXEnabled(true);
+        chart.setDragEnabled(true);                                 // Chart is dragable
+        chart.setScaleXEnabled(true);                               // Only scaleable on X
         chart.setScaleYEnabled(false);
 
-        // Make a marker
-        ChartMarker elevationMarker = new ChartMarker(getActivity());
-        elevationMarker.setOffset(-(elevationMarker.getWidth() / 2), -(elevationMarker.getHeight() / 2));
-        chart.setMarker(elevationMarker);
+        ChartMarker elevationMarker = new ChartMarker(getActivity());   // Make a custom marker
+        elevationMarker.setOffset(
+                -(elevationMarker.getWidth() / 2),
+                -(elevationMarker.getHeight() / 2));                // Center the marker layout
+        chart.setMarker(elevationMarker);                           // Set the new marker to the chart
 
+        // Add a highlight listener
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                latestEntriesAdapter.clear();
-                latestEntriesAdapter.add("You selected: " + e.copy());
-                scrollView.smoothScrollTo(0, scrollView.getTop());
+                makeDialog(e);
             }
 
             @Override
             public void onNothingSelected() {
-
             }
         });
 
-        chart.invalidate();
-
+        chart.invalidate(); // Draw chart
     }
 
-    private void setupCircles(View rootView){
+    private void makeDialog(Entry e) {
+        // Created a new Dialog
+        Dialog dialog = new Dialog(getActivity(), R.style.BetterDialog);   // Custom Dialog with better style
+        dialog.setCanceledOnTouchOutside(true);                             // Can close dialog with touch
+        dialog.setTitle("Dialog Title");                                    // Set the title
+        dialog.setContentView(R.layout.dialog_selected_element);            // Inflate the layout
+
+        // Add an arrayList to the dialog
+        // Will be ersetzt by custom ArrayAdapter
+        ListView listView = (ListView) dialog.findViewById(R.id.selected_item_listView);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_2, android.R.id.text1);
+        listView.setAdapter(arrayAdapter);
+
+        arrayAdapter.add(e.copy().toString());  // Add the entry values to the array (temporary)
+
+        dialog.show();  // Display the dialog
+    }
+
+    private void setupCircles(View rootView) {
         ArcProgress donutProgress1 = (ArcProgress) rootView.findViewById(R.id.donutProgress1);
         ArcProgress donutProgress2 = (ArcProgress) rootView.findViewById(R.id.donutProgress2);
         ArcProgress donutProgress3 = (ArcProgress) rootView.findViewById(R.id.donutProgress3);
 
+        // Progress will be set to smth I dont know yet
         donutProgress1.setProgress(30);
         donutProgress2.setProgress(70);
         donutProgress3.setProgress(50);

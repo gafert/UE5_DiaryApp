@@ -17,6 +17,6 @@ public class ChartMarker extends MarkerView {
      * @param context
      */
     public ChartMarker(Context context) {
-        super(context, R.layout.layout_dot);
+        super(context, R.layout.layout_marker);
     }
 }

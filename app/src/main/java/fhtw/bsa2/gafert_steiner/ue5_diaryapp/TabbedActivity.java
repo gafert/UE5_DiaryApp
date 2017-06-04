@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,8 +35,7 @@ public class TabbedActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        // Set title to first fragment title
-        setTitle(TITLE[0]);
+        setTitle(TITLE[0]);     // Set title to first fragment title
 
         // Change the title on fragment change
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -45,12 +45,11 @@ public class TabbedActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                setTitle(TITLE[position]);
+                setTitle(TITLE[position]);  // Set AppBar title to active fragment title
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
@@ -59,8 +58,8 @@ public class TabbedActivity extends AppCompatActivity {
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        ContextCompat.getDrawable(this, R.drawable.ic_history_white_48dp),
-                        ContextCompat.getColor(this, R.color.colorAccent)
+                        ContextCompat.getDrawable(this, R.drawable.ic_history_white_48dp),  // Set the Icon
+                        ContextCompat.getColor(this, R.color.colorAccent)                   // Set the Text
                 ).title(TITLE[0])
                         .build()
         );
@@ -79,16 +78,16 @@ public class TabbedActivity extends AppCompatActivity {
                         .build()
         );
 
-        navigationTabBar.setModels(models);
+        navigationTabBar.setModels(models);     // Add all tabs
         navigationTabBar.setIsTitled(false);    // Hide Titles from navBar
-        navigationTabBar.setViewPager(mViewPager, 0);
+        navigationTabBar.setViewPager(mViewPager, 0);   // Connect to viewPager
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main2, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -101,6 +100,8 @@ public class TabbedActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "I said leave me alone Bastard!", Toast.LENGTH_SHORT).show();
+            this.finish();
             return true;
         }
 
@@ -120,7 +121,6 @@ public class TabbedActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
             switch (position){
                 case 0:
                     return new ChartFragment();
@@ -134,7 +134,7 @@ public class TabbedActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 2 total pages.
+            // Show 3 total pages.
             return 3;
         }
     }
