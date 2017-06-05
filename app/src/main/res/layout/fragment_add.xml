@@ -26,18 +26,45 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Pick a feeling"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Pick a feeling"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:paddingRight="10dp"
+                    android:text="08.07.2001"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+                <ImageButton
+                    android:id="@+id/dateButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:alpha="0.6"
+                    android:background="@drawable/ic_access_time_white_48dp"
+                    android:button="@null" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:background="@color/colorAccent" />
 
             <LinearLayout
@@ -124,61 +151,6 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_rect_primarydark"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Date"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
-
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAccent" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/dateTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Reason"
-                    android:inputType="textMultiLine"
-                    android:text="08.07.2001"
-                    android:textSize="18sp" />
-
-                <info.hoang8f.widget.FButton
-                    android:id="@+id/dateButton"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Edit"
-                    app:buttonColor="@color/colorAccent" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -213,9 +185,28 @@
                 android:hint="Reason"
                 android:padding="10dp" />
 
+            <FrameLayout
+                android:id="@+id/cameraContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/cameraButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:alpha="0.8"
+                    android:background="@null"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
+                    app:srcCompat="@drawable/ic_camera_alt_white_48dp" />
+            </FrameLayout>
+
         </LinearLayout>
 
         <info.hoang8f.widget.FButton
+            android:id="@+id/submitButton"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"

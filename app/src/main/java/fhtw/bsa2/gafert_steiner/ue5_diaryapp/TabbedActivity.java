@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import devlight.io.library.ntb.NavigationTabBar;
+import es.dmoral.toasty.Toasty;
 
 public class TabbedActivity extends AppCompatActivity {
 
@@ -100,7 +101,7 @@ public class TabbedActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "I said leave me alone Bastard!", Toast.LENGTH_SHORT).show();
+            Toasty.error(this, "I said leave me alone Bastard!", Toast.LENGTH_SHORT).show();
             this.finish();
             return true;
         }
