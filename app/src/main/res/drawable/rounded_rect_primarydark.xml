@@ -2,7 +2,16 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="10dp"
     android:shape="rectangle">
-    <solid android:color="@color/colorPrimaryDark" />
+    <gradient
+        android:angle="135"
+        android:endColor="#30303b"
+        android:startColor="#24242e" />
+
+    <stroke
+        android:width="0dp"
+        android:color="@color/colorAccent" />
+
+
     <corners
         android:bottomLeftRadius="15dp"
         android:bottomRightRadius="15dp"

@@ -10,15 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.gospelware.liquidbutton.LiquidButton;
-import com.john.waveview.WaveView;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -97,7 +92,7 @@ public class AddFragment extends Fragment {
                 }, 1000);
 
                 // Implement saving here
-                Toasty.warning(getContext(), "Saving not yet implemented", Toast.LENGTH_LONG).show();
+                Toasty.warning(getContext(), "Saving not yet implemented", Toast.LENGTH_SHORT).show();
             }
         });
 

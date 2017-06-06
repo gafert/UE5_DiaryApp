@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#24252b</color>
-    <color name="colorPrimaryDark">#212126</color>
+    <color name="colorPrimary">#1a1a1e</color>
+    <color name="colorPrimaryDark">#16161a</color>
     <color name="colorAccent">#ae23ef</color>
     <color name="colorAccent2">#951dce</color>
 
     <color name="grey">#bdffffff</color>
     <color name="darkgrey">#07ffffff</color>
 
-
-    <color name="gradientColor1">#24252b</color>
-    <color name="gradientColor2">#292a31</color>
+    <color name="gradientColor1">#1d1d25</color>
+    <color name="gradientColor2">#17171b</color>
 </resources>

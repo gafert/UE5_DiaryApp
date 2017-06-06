@@ -98,91 +98,80 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorAccent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Happiness"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Normalness"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Sadness"
-                    android:textAlignment="center" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <com.github.lzyzsd.circleprogress.ArcProgress
-                    android:id="@+id/donutProgress1"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:arc_finished_color="@color/colorAccent"
-                    app:arc_text_color="@color/colorAccent"
-                    app:arc_unfinished_color="@color/darkgrey" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_rect_primarydark"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp">
 
-                <com.github.lzyzsd.circleprogress.ArcProgress
-                    android:id="@+id/donutProgress2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:arc_finished_color="@color/colorAccent"
-                    app:arc_text_color="@color/colorAccent"
-                    app:arc_unfinished_color="@color/darkgrey" />
+                    <com.github.lzyzsd.circleprogress.ArcProgress
+                        android:id="@+id/donutProgress1"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center_horizontal"
+                        app:arc_finished_color="@color/colorAccent"
+                        app:arc_text_color="@color/colorAccent"
+                        app:arc_unfinished_color="@color/darkgrey" />
 
-                <com.github.lzyzsd.circleprogress.ArcProgress
-                    android:id="@+id/donutProgress3"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:arc_finished_color="@color/colorAccent"
-                    app:arc_text_color="@color/colorAccent"
-                    app:arc_unfinished_color="@color/darkgrey" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="120dp"
+                        android:layout_weight="1"
+                        android:text="Happiness"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_rect_primarydark"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp">
+
+                    <com.github.lzyzsd.circleprogress.ArcProgress
+                        android:id="@+id/donutProgress2"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center_horizontal"
+                        app:arc_finished_color="@color/colorAccent"
+                        app:arc_text_color="@color/colorAccent"
+                        app:arc_unfinished_color="@color/darkgrey" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="120dp"
+                        android:layout_weight="1"
+                        android:text="Sadness"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+                </FrameLayout>
+
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorAccent" />
 
         </LinearLayout>
 

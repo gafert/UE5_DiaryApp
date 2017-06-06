@@ -6,14 +6,14 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@layout/gradient">
+    android:background="@drawable/gradient">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="fhtw.bsa2.gafert_steiner.ue5_diaryapp.TabbedActivity"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="40dp"
+        tools:context="fhtw.bsa2.gafert_steiner.ue5_diaryapp.TabbedActivity" />
 
     <devlight.io.library.ntb.NavigationTabBar
         android:id="@+id/ntb"

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ import java.util.List;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DayAxisValueFormatter;
 
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_NORMAL;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_SAD;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_HAPPY;
@@ -43,35 +43,45 @@ public class ChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
-        setupGraph(rootView);
-        setupCircles(rootView);
+        ArrayList<Integer> data = getData();
+        setupGraph(rootView, data);
+        setupCircles(rootView, data);
 
         return rootView;
     }
 
-    private void setupGraph(View rootView) {
+    private ArrayList getData() {
+
+        ArrayList<Integer> mData = new ArrayList();
+        mData.add(FEELING_VERY_HAPPY);
+        mData.add(FEELING_NORMAL);
+        mData.add(FEELING_NORMAL);
+        mData.add(FEELING_SAD);
+        mData.add(FEELING_NORMAL);
+        mData.add(FEELING_NORMAL);
+        mData.add(FEELING_NORMAL);
+
+        return mData;
+    }
+
+    private void setupGraph(View rootView, ArrayList<Integer> data) {
 
         LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
+
+        // Entry Array
+        // Later from saved data
+        List<Entry> happinessEntries = new ArrayList<>();
+        int count = 1;
+        for (int entry : data) {
+            happinessEntries.add(new Entry(count, entry));
+            count++;
+        }
 
         // Colors for styling
         int[] colors = new int[3];
         colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
         colors[1] = ContextCompat.getColor(getContext(), R.color.colorAccent2);
         colors[2] = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-
-        // Entry Array
-        // Later from saved data
-        List<Entry> happinessEntries = new ArrayList<>();
-        happinessEntries.add(new Entry(1, FEELING_NORMAL));
-        happinessEntries.add(new Entry(2, FEELING_SAD));
-        happinessEntries.add(new Entry(3, FEELING_NORMAL));
-        happinessEntries.add(new Entry(4, FEELING_VERY_SAD));
-        happinessEntries.add(new Entry(5, FEELING_SAD));
-        happinessEntries.add(new Entry(6, FEELING_HAPPY));
-        happinessEntries.add(new Entry(7, FEELING_VERY_HAPPY));
-        happinessEntries.add(new Entry(8, FEELING_NORMAL));
-        happinessEntries.add(new Entry(9, FEELING_SAD));
-        happinessEntries.add(new Entry(10, FEELING_HAPPY));
 
         LineDataSet happinessDateSet = new LineDataSet(happinessEntries, "Happiness");
 
@@ -102,10 +112,13 @@ public class ChartFragment extends Fragment {
         chart.getXAxis().setLabelCount(10);                         // Max labels in the chart
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);   // X Values are at the bottom of the chart
 
+        // Always draw as high as max values
+        chart.getAxisLeft().setAxisMaximum(FEELING_VERY_HAPPY + 5); // 5 Offset
+        chart.getAxisLeft().setAxisMinimum(FEELING_VERY_SAD - 5);
+
         chart.getAxisLeft().setDrawLabels(false);                   // Disable all y Axis
         chart.getAxisLeft().setDrawAxisLine(false);
-        chart.getAxisRight().setDrawLabels(false);
-        chart.getAxisRight().setDrawAxisLine(false);
+        chart.getAxisRight().setEnabled(false);
 
         chart.setDescription(null);                                 // Remove Description
 
@@ -155,15 +168,28 @@ public class ChartFragment extends Fragment {
         dialog.show();  // Display the dialog
     }
 
-    private void setupCircles(View rootView) {
+    private void setupCircles(View rootView, ArrayList<Integer> data) {
         ArcProgress donutProgress1 = (ArcProgress) rootView.findViewById(R.id.donutProgress1);
         ArcProgress donutProgress2 = (ArcProgress) rootView.findViewById(R.id.donutProgress2);
-        ArcProgress donutProgress3 = (ArcProgress) rootView.findViewById(R.id.donutProgress3);
 
-        // Progress will be set to smth I dont know yet
-        donutProgress1.setProgress(30);
-        donutProgress2.setProgress(70);
-        donutProgress3.setProgress(50);
+        // Get Average
+        int sum = 1;
+        int count = 1;
+        for (int entry : data) {
+            sum += entry;
+            count++;
+        }
+        int average = sum / count;
+
+        float span = FEELING_VERY_HAPPY - FEELING_VERY_SAD; // Span between max and min
+        float percentModifier = 100 / span;
+        int happiness = (int) ((20 + average) * percentModifier);       // 20 +/- the average; if + happy; if - sad
+        int sadness = 100 - happiness;                      // Negative to happiness; 100 are percent
+
+        Log.i("ChartFragment", "setupCircles: Span: " + percentModifier + " Happiness: " + happiness + " Sadness: " + sadness);
+
+        donutProgress1.setProgress(happiness);
+        donutProgress2.setProgress(sadness);
     }
 }
 
