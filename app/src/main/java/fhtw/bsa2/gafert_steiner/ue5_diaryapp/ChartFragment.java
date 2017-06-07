@@ -45,15 +45,16 @@ public class ChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
-        ArrayList<Integer> data = getData();
-        setupGraph(rootView, data);
-        setupCircles(rootView, data);
+        ArrayList<Integer> data = getData();    // Gets the data from a save file or sth
+        setupGraph(rootView, data);             // Makes/Styles the chart with given ArrayList
+        setupCircles(rootView, data);           // Makes/Styles/Calculates the circles with given value
 
         return rootView;
     }
 
     private ArrayList<Integer> getData() {
 
+        // Iwo her kommen daten
         ArrayList<Integer> mData = new ArrayList<>();
         mData.add(FEELING_NORMAL);
         mData.add(FEELING_SAD);

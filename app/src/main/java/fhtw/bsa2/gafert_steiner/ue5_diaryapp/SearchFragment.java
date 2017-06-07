@@ -17,17 +17,15 @@ import android.widget.ListView;
 
 public class SearchFragment extends Fragment {
 
-    ListView searchListView;
-    EditText searchEditText;
-    ArrayAdapter<String> searchListViewAdapter;
+    ArrayAdapter<String> searchListViewAdapter;     // Found search elements are added to this
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
-        searchListView = (ListView) rootView.findViewById(R.id.searchListView);
-        searchEditText = (EditText) rootView.findViewById(R.id.searchEditText);
+        ListView searchListView = (ListView) rootView.findViewById(R.id.searchListView);
+        EditText searchEditText = (EditText) rootView.findViewById(R.id.searchEditText);
 
         // ArrayAdapter will be custom
         searchListViewAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_2, android.R.id.text2);
@@ -48,6 +46,8 @@ public class SearchFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 searchListViewAdapter.clear();
+
+                // Implement Search here
                 searchListViewAdapter.add("You are searching for " + s);
             }
         });

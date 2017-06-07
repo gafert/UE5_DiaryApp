@@ -6,7 +6,7 @@ import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 /**
- * Created by philipp on 02/06/16.
+ * Formats the chart x values to a date
  */
 public class DayAxisValueFormatter implements IAxisValueFormatter {
 

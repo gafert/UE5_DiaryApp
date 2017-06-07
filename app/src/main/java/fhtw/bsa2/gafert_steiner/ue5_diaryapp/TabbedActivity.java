@@ -18,9 +18,8 @@ import es.dmoral.toasty.Toasty;
 
 public class TabbedActivity extends AppCompatActivity {
 
-
+    // Tab Titles
     public final static String[] TITLE = {"Feelings", "Add Entry", "Search"};
-
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;

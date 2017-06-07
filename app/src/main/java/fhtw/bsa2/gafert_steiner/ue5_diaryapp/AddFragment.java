@@ -36,10 +36,12 @@ public class AddFragment extends Fragment {
         final ImageButton cameraButton = (ImageButton) rootView.findViewById(R.id.cameraButton);
         final FButton submitButton = (FButton) rootView.findViewById(R.id.submitButton);
 
+        // Set Current Date with format to TextView
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d. MMM yyyy");
         String currentDateAndTime = simpleDateFormat.format(new Date());
         dateText.setText(currentDateAndTime);
 
+        // Sets new date picked in datePickerDialog
         View.OnClickListener onDatePick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
