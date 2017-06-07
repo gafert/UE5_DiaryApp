@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.github.mikephil.charting.charts.LineChart;
@@ -29,6 +30,7 @@ import java.util.List;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DayAxisValueFormatter;
 
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_NORMAL;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_SAD;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_HAPPY;
@@ -50,17 +52,16 @@ public class ChartFragment extends Fragment {
         return rootView;
     }
 
-    private ArrayList getData() {
+    private ArrayList<Integer> getData() {
 
-        ArrayList<Integer> mData = new ArrayList();
-        mData.add(FEELING_VERY_HAPPY);
-        mData.add(FEELING_NORMAL);
+        ArrayList<Integer> mData = new ArrayList<>();
         mData.add(FEELING_NORMAL);
         mData.add(FEELING_SAD);
+        mData.add(FEELING_VERY_HAPPY);
+        mData.add(FEELING_VERY_SAD);
         mData.add(FEELING_NORMAL);
-        mData.add(FEELING_NORMAL);
-        mData.add(FEELING_NORMAL);
-
+        mData.add(FEELING_SAD);
+        mData.add(FEELING_HAPPY);
         return mData;
     }
 
@@ -139,7 +140,7 @@ public class ChartFragment extends Fragment {
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                makeDialog(e);
+                makeEntryDialog(e);
             }
 
             @Override
@@ -150,11 +151,10 @@ public class ChartFragment extends Fragment {
         chart.invalidate(); // Draw chart
     }
 
-    private void makeDialog(Entry e) {
+    private void makeEntryDialog(Entry e) {
         // Created a new Dialog
         Dialog dialog = new Dialog(getActivity(), R.style.BetterDialog);   // Custom Dialog with better style
         dialog.setCanceledOnTouchOutside(true);                             // Can close dialog with touch
-        dialog.setTitle("Dialog Title");                                    // Set the title
         dialog.setContentView(R.layout.dialog_selected_element);            // Inflate the layout
 
         // Add an arrayList to the dialog
@@ -169,8 +169,8 @@ public class ChartFragment extends Fragment {
     }
 
     private void setupCircles(View rootView, ArrayList<Integer> data) {
-        ArcProgress donutProgress1 = (ArcProgress) rootView.findViewById(R.id.donutProgress1);
-        ArcProgress donutProgress2 = (ArcProgress) rootView.findViewById(R.id.donutProgress2);
+        final ArcProgress donutProgress1 = (ArcProgress) rootView.findViewById(R.id.donutProgress1);
+        final ArcProgress donutProgress2 = (ArcProgress) rootView.findViewById(R.id.donutProgress2);
 
         // Get Average
         int sum = 1;
@@ -190,6 +190,65 @@ public class ChartFragment extends Fragment {
 
         donutProgress1.setProgress(happiness);
         donutProgress2.setProgress(sadness);
+
+        donutProgress1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int progress = donutProgress1.getProgress();
+                String title = "You have " + progress + "% happiness";
+                String description = "";
+
+                if (progress <= 40) {
+                    description = getString(R.string.feeling_happy_40);
+                } else if (progress > 40 && progress < 50) {
+                    description = getString(R.string.feeling_happy_40_50);
+                } else if (progress == 50) {
+                    description = getString(R.string.feeling_happy_50);
+                } else if (progress > 50) {
+                    description = getString(R.string.feeling_happy_50_100);
+                }
+
+                makeCircleDialog(title, description);
+            }
+        });
+
+        donutProgress2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Currently the same as the other button
+                // Maybe change in the future
+                int progress = donutProgress1.getProgress();
+                String title = "You have " + donutProgress2.getProgress() + "% sadness";
+                String description = "";
+
+                if (progress <= 40) {
+                    description = getString(R.string.feeling_happy_40);
+                } else if (progress > 40 && progress < 50) {
+                    description = getString(R.string.feeling_happy_40_50);
+                } else if (progress == 50) {
+                    description = getString(R.string.feeling_happy_50);
+                } else if (progress > 50) {
+                    description = getString(R.string.feeling_happy_50_100);
+                }
+
+                makeCircleDialog(title, description);
+            }
+        });
+    }
+
+    private void makeCircleDialog(String title, String description) {
+        // Created a new Dialog
+        Dialog dialog = new Dialog(getActivity(), R.style.BetterDialog);    // Custom Dialog with better style
+        dialog.setCanceledOnTouchOutside(true);                             // Can close dialog with touch
+        dialog.setContentView(R.layout.dialog_circle);                      // Inflate the layout
+
+        TextView titleTextView = (TextView) dialog.findViewById(R.id.titleText);
+        TextView descriptionTextView = (TextView) dialog.findViewById(R.id.descriptionText);
+
+        titleTextView.setText(title);
+        descriptionTextView.setText(description);
+
+        dialog.show();  // Display the dialog
     }
 }
 

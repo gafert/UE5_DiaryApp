@@ -160,7 +160,7 @@
                 android:id="@+id/additionalInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_rect_darkrey"
+                android:background="@drawable/rounded_rect_darkgrey"
                 android:ems="10"
                 android:hint="Reason"
                 android:padding="10dp" />
