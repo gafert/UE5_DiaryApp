@@ -46,6 +46,7 @@ public class TabbedActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 setTitle(TITLE[position]);  // Set AppBar title to active fragment title
+                //TODO: Read From File
             }
 
             @Override
