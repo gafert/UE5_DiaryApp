@@ -62,7 +62,7 @@ public class ChartFragment extends Fragment {
         mData.add(FEELING_NORMAL);
         mData.add(FEELING_SAD);
         mData.add(FEELING_VERY_HAPPY);
-        mData.add(FEELING_VERY_SAD);
+        /*mData.add(FEELING_VERY_SAD);
         mData.add(FEELING_NORMAL);
         mData.add(FEELING_SAD);
         mData.add(FEELING_HAPPY);
@@ -75,6 +75,7 @@ public class ChartFragment extends Fragment {
         mData.add(FEELING_HAPPY);
         mData.add(FEELING_HAPPY);
         mData.add(FEELING_HAPPY);
+        */
 
         return mData;
     }
@@ -126,6 +127,7 @@ public class ChartFragment extends Fragment {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setTextColor(Color.WHITE);
+        //chart.getXAxis().setValueFormatter(new DateFormatter(getData()));   // Format x values to see day
         chart.getXAxis().setValueFormatter(new DateFormatter());   // Format x values to see day
         chart.getXAxis().setGranularity(1);                         // Just whole numbers are represented
         chart.getXAxis().setLabelRotationAngle(45);

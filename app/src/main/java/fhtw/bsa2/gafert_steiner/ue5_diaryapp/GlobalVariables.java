@@ -11,4 +11,6 @@ public class GlobalVariables {
     // The style in which the date should be saved
     // Important for the xAxis of the chart as it expects this format
     public final static String SAVE_DATE_FORMAT = "ddMMyyyy";
+    public final static int REQUEST_IMAGE_CAPTURE = 1;
+    public static final int REQUEST_TAKE_PHOTO = 1;
 }
