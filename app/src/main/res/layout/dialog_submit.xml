@@ -4,8 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/rounded_rect_primarydark"
+    android:background="@drawable/rounded_rect_gradient_background"
     android:gravity="center"
+    android:orientation="horizontal"
     android:padding="20dp">
 
     <TextView

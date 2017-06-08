@@ -2,12 +2,19 @@
 <resources>
     <color name="colorPrimary">#1a1a1e</color>
     <color name="colorPrimaryDark">#16161a</color>
-    <color name="colorAccent">#ae23ef</color>
-    <color name="colorAccent2">#951dce</color>
+    <color name="colorAccent">#be31ff</color>
+
+    <color name="navBar1">#b822ff</color>
+    <color name="navBar2">#a01ede</color>
+    <color name="navBar3">#da22ff</color>
 
     <color name="grey">#bdffffff</color>
     <color name="darkgrey">#07ffffff</color>
 
-    <color name="gradientColor1">#1d1d25</color>
-    <color name="gradientColor2">#17171b</color>
+    <color name="backGroundGradient1">#23232d</color>
+    <color name="backGroundGradient2">#0b0b0d</color>
+
+    <color name="roundedRectGradient1">#343441</color>
+    <color name="roundedRectGradient2">#24242e</color>
+
 </resources>

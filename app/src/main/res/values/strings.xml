@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Shivers</string>
+    <string name="app_name">Emotion</string>
     <string name="action_settings">Settings</string>
 
     <string name="feeling_happy_40">Oi… You are having a hard time there ain´t ya? Keep up, the world is still spinning and things will change soonish. No one needs to be happy all the time.</string>
     <string name="feeling_happy_40_50">Good, but could be better.\nKeep up!</string>
-    <string name="feeling_happy_50">As I always say: "Average Beverage" Makes no sense but at least it rhymes. You have as much bad days as good days and that´s OKAY! Nothing to worry about… Or maybe you are extremely emotional and have ups and downs like every other day.</string>
-    <string name="feeling_happy_50_100">Yay!! You are a happy child! \n"Nobody can drag you down!" - One Direction\n(Harry is better on his own anyways, so nothing to worry about)\nAs the Aussies always say: "Your problems are half a bees dick long." Scientist translated this to: "All is good."\nWhich means you is also good!</string>
+    <string name="feeling_happy_50">As I always say:\n\"Average Beverage\" \n\nMakes no sense but at least it rhymes. You have as much bad days as good days and that´s OKAY! Nothing to worry about… Or maybe you are extremely emotional and have ups and downs like every other day.\n\n Anyways, good job!</string>
+    <string name="feeling_happy_50_100">Yay!! You are a happy child! \n\n"Nobody can drag you down!"\n - One Direction\n\n(Harry is better on his own anyways, so nothing to worry about)\n\nAs the Aussies always say:\n\"Your problems are half a bees dick long.\"\n\n Scientist translated this to:\n\"All is good.\"\n\nWhich means you is also good!</string>
 </resources>

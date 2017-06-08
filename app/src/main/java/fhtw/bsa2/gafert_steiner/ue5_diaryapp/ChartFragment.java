@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_SAD;
 
 public class ChartFragment extends Fragment {
 
+    final String TAG = "ChartFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,39 +72,44 @@ public class ChartFragment extends Fragment {
 
         LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
 
-        // Entry Array
-        // Later from saved data
-        List<Entry> happinessEntries = new ArrayList<>();
-        int count = 1;
-        for (int entry : data) {
-            happinessEntries.add(new Entry(count, entry));
-            count++;
+        if (data != null) {
+            if (!data.isEmpty()) {
+                // Entry Array
+                List<Entry> happinessEntries = new ArrayList<>();
+                int count = 1;
+                for (int entry : data) {
+                    happinessEntries.add(new Entry(count, entry));
+                    count++;
+                }
+
+                // Colors for styling
+                int[] colors = new int[3];
+                colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
+                colors[1] = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+
+                LineDataSet happinessDateSet = new LineDataSet(happinessEntries, "Happiness");
+
+                happinessDateSet.setColor(colors[0]);                       // Format Line
+                happinessDateSet.setCircleColor(colors[0]);
+                happinessDateSet.setCircleColorHole(colors[1]);
+                happinessDateSet.setCircleRadius(7);
+                happinessDateSet.setCircleHoleRadius(5);
+                happinessDateSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);    // Makes it line smooth
+                happinessDateSet.setHighlightEnabled(true);                 // Allow highlighting for DataSet
+                happinessDateSet.setDrawHighlightIndicators(false);         // Draw point on which someone clicked
+                happinessDateSet.setLineWidth(2.5f);
+
+                List<ILineDataSet> dataSet = new ArrayList<ILineDataSet>();
+                dataSet.add(happinessDateSet);                              // All lines are added to a dataSet
+
+                LineData lineData = new LineData(dataSet);
+                lineData.setDrawValues(false);
+
+                chart.setData(lineData);
+            }
         }
 
-        // Colors for styling
-        int[] colors = new int[3];
-        colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
-        colors[1] = ContextCompat.getColor(getContext(), R.color.colorAccent2);
-        colors[2] = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-
-        LineDataSet happinessDateSet = new LineDataSet(happinessEntries, "Happiness");
-
-        happinessDateSet.setColor(colors[0]);                       // Format Line
-        happinessDateSet.setCircleColor(colors[1]);
-        happinessDateSet.setCircleColorHole(colors[2]);
-        happinessDateSet.setCircleRadius(5);
-        happinessDateSet.setCircleHoleRadius(4);
-        happinessDateSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);    // Makes it line smooth
-        happinessDateSet.setHighlightEnabled(true);                 // Allow highlighting for DataSet
-        happinessDateSet.setDrawHighlightIndicators(false);         // Draw point on which someone clicked
-
-        List<ILineDataSet> dataSet = new ArrayList<ILineDataSet>();
-        dataSet.add(happinessDateSet);                              // All lines are added to a dataSet
-
-        LineData lineData = new LineData(dataSet);
-        lineData.setDrawValues(false);
-
-        chart.setData(lineData);                                    // Add the lines to the chart
+        // Add the lines to the chart
         chart.getLegend().setEnabled(false);                        // Disables Legend
 
         chart.getXAxis().setDrawAxisLine(false);
@@ -159,6 +167,7 @@ public class ChartFragment extends Fragment {
 
         // Add an arrayList to the dialog
         // Will be ersetzt by custom ArrayAdapter
+        //TODO: Adapt ArrayAdapter
         ListView listView = (ListView) dialog.findViewById(R.id.selected_item_listView);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_2, android.R.id.text1);
         listView.setAdapter(arrayAdapter);
@@ -171,66 +180,76 @@ public class ChartFragment extends Fragment {
         final ArcProgress donutProgress1 = (ArcProgress) rootView.findViewById(R.id.donutProgress1);
         final ArcProgress donutProgress2 = (ArcProgress) rootView.findViewById(R.id.donutProgress2);
 
-        // Get Average
-        int sum = 1;
-        int count = 1;
-        for (int entry : data) {
-            sum += entry;
-            count++;
+        final View sadnessButton = rootView.findViewById(R.id.sadnessButton);
+        final View happinessButton = rootView.findViewById(R.id.happinessButton);
+
+        try {
+
+            // Get Average
+            int sum = 0;
+            int count = 0;
+            int average = 0;
+            for (int entry : data) {
+                sum += entry;
+                count++;
+            }
+            average = sum / count;
+
+
+            float span = FEELING_VERY_HAPPY - FEELING_VERY_SAD; // Span between max and min
+            float percentModifier = 100 / span;
+            int happiness = (int) ((20 + average) * percentModifier);       // 20 +/- the average; if + happy; if - sad
+            int sadness = 100 - happiness;                      // Negative to happiness; 100 are percent
+
+            donutProgress1.setProgress(happiness);
+            donutProgress2.setProgress(sadness);
+
+            happinessButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int progress = donutProgress1.getProgress();
+                    String title = "You have " + progress + "% happiness";
+                    String description = "";
+
+                    if (progress <= 40) {
+                        description = getString(R.string.feeling_happy_40);
+                    } else if (progress > 40 && progress < 50) {
+                        description = getString(R.string.feeling_happy_40_50);
+                    } else if (progress == 50) {
+                        description = getString(R.string.feeling_happy_50);
+                    } else if (progress > 50) {
+                        description = getString(R.string.feeling_happy_50_100);
+                    }
+
+                    makeCircleDialog(title, description);
+                }
+            });
+
+            sadnessButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Currently the same as the other button
+                    // Maybe change in the future
+                    int progress = donutProgress1.getProgress();
+                    String title = "You have " + donutProgress2.getProgress() + "% sadness";
+                    String description = "";
+
+                    if (progress <= 40) {
+                        description = getString(R.string.feeling_happy_40);
+                    } else if (progress > 40 && progress < 50) {
+                        description = getString(R.string.feeling_happy_40_50);
+                    } else if (progress == 50) {
+                        description = getString(R.string.feeling_happy_50);
+                    } else if (progress > 50) {
+                        description = getString(R.string.feeling_happy_50_100);
+                    }
+
+                    makeCircleDialog(title, description);
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "setupCircles: No items in array");
         }
-        int average = sum / count;
-
-        float span = FEELING_VERY_HAPPY - FEELING_VERY_SAD; // Span between max and min
-        float percentModifier = 100 / span;
-        int happiness = (int) ((20 + average) * percentModifier);       // 20 +/- the average; if + happy; if - sad
-        int sadness = 100 - happiness;                      // Negative to happiness; 100 are percent
-
-        donutProgress1.setProgress(happiness);
-        donutProgress2.setProgress(sadness);
-
-        donutProgress1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int progress = donutProgress1.getProgress();
-                String title = "You have " + progress + "% happiness";
-                String description = "";
-
-                if (progress <= 40) {
-                    description = getString(R.string.feeling_happy_40);
-                } else if (progress > 40 && progress < 50) {
-                    description = getString(R.string.feeling_happy_40_50);
-                } else if (progress == 50) {
-                    description = getString(R.string.feeling_happy_50);
-                } else if (progress > 50) {
-                    description = getString(R.string.feeling_happy_50_100);
-                }
-
-                makeCircleDialog(title, description);
-            }
-        });
-
-        donutProgress2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Currently the same as the other button
-                // Maybe change in the future
-                int progress = donutProgress1.getProgress();
-                String title = "You have " + donutProgress2.getProgress() + "% sadness";
-                String description = "";
-
-                if (progress <= 40) {
-                    description = getString(R.string.feeling_happy_40);
-                } else if (progress > 40 && progress < 50) {
-                    description = getString(R.string.feeling_happy_40_50);
-                } else if (progress == 50) {
-                    description = getString(R.string.feeling_happy_50);
-                } else if (progress > 50) {
-                    description = getString(R.string.feeling_happy_50_100);
-                }
-
-                makeCircleDialog(title, description);
-            }
-        });
     }
 
     private void makeCircleDialog(String title, String description) {

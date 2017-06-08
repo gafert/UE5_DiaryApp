@@ -59,21 +59,21 @@ public class TabbedActivity extends AppCompatActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         ContextCompat.getDrawable(this, R.drawable.ic_history_white_48dp),  // Set the Icon
-                        ContextCompat.getColor(this, R.color.colorAccent)                   // Set the Text
+                        ContextCompat.getColor(this, R.color.navBar1)                   // Set the Text
                 ).title(TITLE[0])
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
                         ContextCompat.getDrawable(this, R.drawable.ic_add_white_48dp),
-                        ContextCompat.getColor(this, R.color.colorAccent)
+                        ContextCompat.getColor(this, R.color.navBar2)
                 ).title(TITLE[1])
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
                         ContextCompat.getDrawable(this, R.drawable.ic_search_white_48dp),
-                        ContextCompat.getColor(this, R.color.colorAccent2)
+                        ContextCompat.getColor(this, R.color.navBar3)
                 ).title(TITLE[2])
                         .build()
         );

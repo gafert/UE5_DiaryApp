@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@drawable/rounded_rect_primarydark"
+    android:background="@drawable/rounded_rect_gradient_background"
     android:orientation="vertical"
     android:paddingBottom="10dp"
     android:paddingLeft="10dp"

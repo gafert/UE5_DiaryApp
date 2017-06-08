@@ -112,11 +112,12 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
+                    android:id="@+id/happinessButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_rect_primarydark"
+                    android:background="@drawable/rounded_rect_gradient_background"
                     android:paddingBottom="20dp"
                     android:paddingTop="20dp">
 
@@ -142,11 +143,12 @@
                 </FrameLayout>
 
                 <FrameLayout
+                    android:id="@+id/sadnessButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_rect_primarydark"
+                    android:background="@drawable/rounded_rect_gradient_background"
                     android:paddingBottom="20dp"
                     android:paddingTop="20dp">
 
