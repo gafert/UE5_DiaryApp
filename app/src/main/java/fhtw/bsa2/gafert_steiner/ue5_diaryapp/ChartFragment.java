@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,7 +164,6 @@ public class ChartFragment extends Fragment {
         listView.setAdapter(arrayAdapter);
 
         arrayAdapter.add(e.copy().toString());  // Add the entry values to the array (temporary)
-
         dialog.show();  // Display the dialog
     }
 
@@ -186,8 +184,6 @@ public class ChartFragment extends Fragment {
         float percentModifier = 100 / span;
         int happiness = (int) ((20 + average) * percentModifier);       // 20 +/- the average; if + happy; if - sad
         int sadness = 100 - happiness;                      // Negative to happiness; 100 are percent
-
-        Log.i("ChartFragment", "setupCircles: Span: " + percentModifier + " Happiness: " + happiness + " Sadness: " + sadness);
 
         donutProgress1.setProgress(happiness);
         donutProgress2.setProgress(sadness);
