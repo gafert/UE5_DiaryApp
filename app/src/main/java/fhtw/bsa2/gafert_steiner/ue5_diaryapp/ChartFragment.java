@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -28,13 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
-import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DayAxisValueFormatter;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DateFormatter;
 
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_HAPPY;
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_NORMAL;
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_SAD;
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_HAPPY;
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.FeelData.FEELING_VERY_SAD;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_HAPPY;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_NORMAL;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_SAD;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY_HAPPY;
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY_SAD;
 
 
 public class ChartFragment extends Fragment {
@@ -47,7 +48,7 @@ public class ChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
-        ArrayList<Integer> data = null;    // Gets the data from a save file or sth
+        ArrayList<Integer> data = getData();    // Gets the data from a save file or sth
         setupGraph(rootView, data);             // Makes/Styles the chart with given ArrayList
         setupCircles(rootView, data);           // Makes/Styles/Calculates the circles with given value
 
@@ -65,6 +66,16 @@ public class ChartFragment extends Fragment {
         mData.add(FEELING_NORMAL);
         mData.add(FEELING_SAD);
         mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+        mData.add(FEELING_HAPPY);
+
         return mData;
     }
 
@@ -115,7 +126,7 @@ public class ChartFragment extends Fragment {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setTextColor(Color.WHITE);
-        chart.getXAxis().setValueFormatter(new DayAxisValueFormatter(chart));   // Format x values to see day
+        chart.getXAxis().setValueFormatter(new DateFormatter(getData()));   // Format x values to see day
         chart.getXAxis().setGranularity(1);                         // Just whole numbers are represented
         chart.getXAxis().setLabelRotationAngle(45);
         chart.getXAxis().setLabelCount(10);                         // Max labels in the chart
@@ -143,6 +154,9 @@ public class ChartFragment extends Fragment {
                 -(elevationMarker.getWidth() / 2),
                 -(elevationMarker.getHeight() / 2));                // Center the marker layout
         chart.setMarker(elevationMarker);                           // Set the new marker to the chart
+        chart.setVisibleXRange(2, 10);
+        chart.moveViewTo(chart.getData().getEntryCount() - 7, 0, YAxis.AxisDependency.RIGHT);
+        chart.moveViewToAnimated(chart.getData().getEntryCount(), 0, YAxis.AxisDependency.RIGHT, 10000);
 
         // Add a highlight listener
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {

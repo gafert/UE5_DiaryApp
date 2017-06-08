@@ -24,7 +24,9 @@ import info.hoang8f.widget.FButton;
 
 public class AddFragment extends Fragment {
 
-    private Date date;  // Use this to get the date
+    private Date date;
+    // Use this to get the date
+    // Date needs to be formatted to before saving SAVE_DATE_FORMAT
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
