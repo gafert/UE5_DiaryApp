@@ -36,6 +36,7 @@ dependencies {
     compile 'info.hoang8f:fbutton:1.0.5'
     compile 'com.github.GrenderG:Toasty:1.2.5'
     compile 'com.roughike:swipe-selector:1.0.6'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 
     testCompile 'junit:junit:4.12'
 }
