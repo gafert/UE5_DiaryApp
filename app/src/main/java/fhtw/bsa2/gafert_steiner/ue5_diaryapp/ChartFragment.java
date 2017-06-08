@@ -126,10 +126,10 @@ public class ChartFragment extends Fragment {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setTextColor(Color.WHITE);
-        chart.getXAxis().setValueFormatter(new DateFormatter(getData()));   // Format x values to see day
+        chart.getXAxis().setValueFormatter(new DateFormatter());   // Format x values to see day
         chart.getXAxis().setGranularity(1);                         // Just whole numbers are represented
         chart.getXAxis().setLabelRotationAngle(45);
-        chart.getXAxis().setLabelCount(10);                         // Max labels in the chart
+        chart.getXAxis().setLabelCount(15);                         // Max labels in the chart
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);   // X Values are at the bottom of the chart
 
         // Always draw as high as max values
@@ -154,9 +154,8 @@ public class ChartFragment extends Fragment {
                 -(elevationMarker.getWidth() / 2),
                 -(elevationMarker.getHeight() / 2));                // Center the marker layout
         chart.setMarker(elevationMarker);                           // Set the new marker to the chart
-        chart.setVisibleXRange(2, 10);
-        chart.moveViewTo(chart.getData().getEntryCount() - 7, 0, YAxis.AxisDependency.RIGHT);
-        chart.moveViewToAnimated(chart.getData().getEntryCount(), 0, YAxis.AxisDependency.RIGHT, 10000);
+        chart.setVisibleXRangeMaximum(15);
+        chart.moveViewTo(chart.getData().getEntryCount(), 0, YAxis.AxisDependency.RIGHT);
 
         // Add a highlight listener
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
