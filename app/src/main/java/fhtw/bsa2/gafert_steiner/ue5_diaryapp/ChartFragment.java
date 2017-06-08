@@ -47,7 +47,7 @@ public class ChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
-        ArrayList<Integer> data = getData();    // Gets the data from a save file or sth
+        ArrayList<Integer> data = null;    // Gets the data from a save file or sth
         setupGraph(rootView, data);             // Makes/Styles the chart with given ArrayList
         setupCircles(rootView, data);           // Makes/Styles/Calculates the circles with given value
 
