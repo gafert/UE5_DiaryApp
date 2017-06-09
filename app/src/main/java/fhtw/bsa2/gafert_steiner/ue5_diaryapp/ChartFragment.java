@@ -31,7 +31,6 @@ import java.util.List;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DateFormatter;
 
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_NORMAL;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_SAD;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY_HAPPY;
@@ -48,6 +47,7 @@ public class ChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
+        //TODO: Change getData ArrayList
         ArrayList<Integer> data = getData();    // Gets the data from a save file or sth
         setupGraph(rootView, data);             // Makes/Styles the chart with given ArrayList
         setupCircles(rootView, data);           // Makes/Styles/Calculates the circles with given value
@@ -57,25 +57,10 @@ public class ChartFragment extends Fragment {
 
     private ArrayList<Integer> getData() {
 
-        // Iwo her kommen daten
         ArrayList<Integer> mData = new ArrayList<>();
         mData.add(FEELING_NORMAL);
         mData.add(FEELING_SAD);
         mData.add(FEELING_VERY_HAPPY);
-        /*mData.add(FEELING_VERY_SAD);
-        mData.add(FEELING_NORMAL);
-        mData.add(FEELING_SAD);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        mData.add(FEELING_HAPPY);
-        */
 
         return mData;
     }
@@ -127,8 +112,9 @@ public class ChartFragment extends Fragment {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setTextColor(Color.WHITE);
+        //TODO: Activate DateFormatter
         //chart.getXAxis().setValueFormatter(new DateFormatter(getData()));   // Format x values to see day
-        chart.getXAxis().setValueFormatter(new DateFormatter());   // Format x values to see day
+        chart.getXAxis().setValueFormatter(new DateFormatter());    // Format x values to see day
         chart.getXAxis().setGranularity(1);                         // Just whole numbers are represented
         chart.getXAxis().setLabelRotationAngle(45);
         chart.getXAxis().setLabelCount(15);                         // Max labels in the chart
@@ -163,6 +149,7 @@ public class ChartFragment extends Fragment {
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
+                //TODO: Make Entry Dialog Display correct values
                 makeEntryDialog(e);
             }
 

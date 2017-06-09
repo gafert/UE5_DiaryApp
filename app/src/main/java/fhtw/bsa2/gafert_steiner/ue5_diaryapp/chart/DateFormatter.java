@@ -28,7 +28,6 @@ public class DateFormatter implements IAxisValueFormatter {
         this.arrayList = arrayList;
     }
 
-
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
 

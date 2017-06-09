@@ -17,9 +17,8 @@ import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY
 
 public class EmotionEntries {
 
-    ArrayList<EmotionEntry> entryList;
-
     private static EmotionEntries entries;
+    ArrayList<EmotionEntry> entryList;
 
 
     private EmotionEntries(){
@@ -30,7 +29,6 @@ public class EmotionEntries {
         EmotionEntry entry3 = new EmotionEntry(new Date(), FEELING_VERY_HAPPY, "path", "AnyReason");
         EmotionEntry entry4 = new EmotionEntry(new Date(), FEELING_NORMAL, "path", "AnyReason");
         EmotionEntry entry5 = new EmotionEntry(new Date(), FEELING_VERY_HAPPY, "path", "AnyReason");
-
     }
 
     public static EmotionEntries getInstance () {
