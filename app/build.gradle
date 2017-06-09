@@ -36,7 +36,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'info.hoang8f:fbutton:1.0.5'
     compile 'com.github.GrenderG:Toasty:1.2.5'
-    compile 'com.roughike:swipe-selector:1.0.6'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.makeramen:roundedimageview:2.3.0'
 

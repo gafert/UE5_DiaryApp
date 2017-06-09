@@ -112,8 +112,6 @@ public class ChartFragment extends Fragment {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setTextColor(Color.WHITE);
-        //TODO: Activate DateFormatter
-        //chart.getXAxis().setValueFormatter(new DateFormatter(getData()));   // Format x values to see day
         chart.getXAxis().setValueFormatter(new DateFormatter());    // Format x values to see day
         chart.getXAxis().setGranularity(1);                         // Just whole numbers are represented
         chart.getXAxis().setLabelRotationAngle(45);

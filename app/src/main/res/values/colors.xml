@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#1a1a1e</color>
-    <color name="colorPrimaryDark">#16161a</color>
+    <color name="colorPrimaryDark">#040405</color>
     <color name="colorAccent">#be31ff</color>
 
     <color name="navBar1">#b822ff</color>
@@ -16,5 +16,7 @@
 
     <color name="roundedRectGradient1">#343441</color>
     <color name="roundedRectGradient2">#24242e</color>
+
+    <color name="searchBar">#111115</color>
 
 </resources>

@@ -12,7 +12,7 @@ import fhtw.bsa2.gafert_steiner.ue5_diaryapp.R;
 
 public class ChartMarker extends MarkerView {
     /**
-     * Constructor. Sets up the MarkerView with a custom layout resource.
+     * Sets up the Hightlight Marker in the chart with a custom layout resource.
      */
     public ChartMarker(Context context) {
         super(context, R.layout.layout_marker);

@@ -5,8 +5,8 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
         android:background="@drawable/chart_marker" />
 
 </LinearLayout>

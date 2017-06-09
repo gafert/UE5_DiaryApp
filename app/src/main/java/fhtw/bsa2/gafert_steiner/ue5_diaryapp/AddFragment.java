@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -23,6 +25,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.makeramen.roundedimageview.RoundedDrawable;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +59,7 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_add, container, false);
 
         ImageButton dateButton = (ImageButton) rootView.findViewById(R.id.dateButton);
         ImageButton cameraButton = (ImageButton) rootView.findViewById(R.id.cameraButton);
@@ -91,7 +96,7 @@ public class AddFragment extends Fragment {
 
         // Set Current Date with format to TextView
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d. MMM yyyy");
-        String currentDateAndTime = simpleDateFormat.format(new Date());
+        final String currentDateAndTime = simpleDateFormat.format(new Date());
         dateText.setText(currentDateAndTime);
 
         // Sets new date picked in datePickerDialog
@@ -158,6 +163,28 @@ public class AddFragment extends Fragment {
                 }, 1000);
 
                 //Toasty.warning(getContext(), "Saving not yet implemented", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        selfieView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Created a new Dialog
+                Dialog dialog = new Dialog(getActivity(), R.style.BetterDialog) {
+                    @Override
+                    public boolean onTouchEvent(MotionEvent event) {
+                        // Tap anywhere to close dialog.
+                        this.dismiss();
+                        return true;
+                    }
+                };
+                dialog.setCanceledOnTouchOutside(true);                                   // Can close dialog with touch
+                dialog.setContentView(R.layout.dialog_selfie);                            // Inflate the layout
+                RoundedImageView selfie = (RoundedImageView) dialog.findViewById(R.id.selfieDialogView);
+                Bitmap bitmap = Bitmap.createBitmap(((RoundedDrawable) selfieView.getDrawable()).getSourceBitmap());
+                selfie.setImageBitmap(bitmap);
+
+                dialog.show();
             }
         });
 

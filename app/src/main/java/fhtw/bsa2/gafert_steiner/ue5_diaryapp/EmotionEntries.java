@@ -21,7 +21,7 @@ public class EmotionEntries {
     ArrayList<EmotionEntry> entryList;
 
 
-    private EmotionEntries(){
+    private EmotionEntries() {
         entryList = new ArrayList<EmotionEntry>();
 
         EmotionEntry entry1 = new EmotionEntry(new Date(), FEELING_NORMAL, "path", "AnyReason");
@@ -31,18 +31,19 @@ public class EmotionEntries {
         EmotionEntry entry5 = new EmotionEntry(new Date(), FEELING_VERY_HAPPY, "path", "AnyReason");
     }
 
-    public static EmotionEntries getInstance () {
+    public static EmotionEntries getInstance() {
         if (entries == null) {
-            entries = new EmotionEntries ();
+            entries = new EmotionEntries();
         }
         return entries;
     }
 
-    public void addEmotion(EmotionEntry newEntry){
+    public void addEmotion(EmotionEntry newEntry) {
         entryList.add(newEntry);
 
         Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<EmotionEntry>>() {}.getType();
+        Type listType = new TypeToken<ArrayList<EmotionEntry>>() {
+        }.getType();
         String json = gson.toJson(entryList, listType);
     }
 }

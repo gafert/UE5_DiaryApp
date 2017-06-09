@@ -21,7 +21,7 @@ public class DateFormatter implements IAxisValueFormatter {
     private ArrayList arrayList;
 
     public DateFormatter() {
-
+        arrayList = new ArrayList();
     }
 
     public DateFormatter(ArrayList<?> arrayList) {
@@ -33,7 +33,7 @@ public class DateFormatter implements IAxisValueFormatter {
 
         String newDate = String.valueOf(value); // Set default
 
-        if (arrayList != null) {
+        if (!arrayList.isEmpty()) {
             try {
                 String savedDate = String.valueOf(arrayList.get((int) value));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(SAVE_DATE_FORMAT);               // Make a new Date with this format

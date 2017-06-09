@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     tools:context="fhtw.bsa2.gafert_steiner.ue5_diaryapp.AddFragment">
 
 
@@ -28,28 +29,22 @@
             android:paddingRight="10dp"
             android:paddingTop="15dp">
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="370dp"
+                android:layout_height="65dp"
                 android:foregroundGravity="center">
 
                 <RadioGroup
                     android:id="@+id/emotion"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="0dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
                     android:checkedButton="@+id/normalButton"
                     android:foregroundGravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="w,5.6:1"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/veryHappyButton"
@@ -116,7 +111,7 @@
 
                 </RadioGroup>
 
-            </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
