@@ -81,6 +81,9 @@ public class ChartFragment extends Fragment {
                     count++;
                 }
 
+                chart.getXAxis().setAxisMinimum(-1f);
+                chart.getXAxis().setAxisMaximum(count + 0.2f);
+
                 // Colors for styling
                 int[] colors = new int[3];
                 colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
@@ -125,7 +128,9 @@ public class ChartFragment extends Fragment {
         chart.getAxisLeft().setAxisMaximum(FEELING_VERY_HAPPY + 5); // 5 Offset
         chart.getAxisLeft().setAxisMinimum(FEELING_VERY_SAD - 3);
 
-        chart.getAxisLeft().setEnabled(false);
+
+        chart.getAxisLeft().setDrawAxisLine(false);
+        chart.getAxisLeft().setDrawLabels(false);
         chart.getAxisRight().setEnabled(false);
 
         chart.setDescription(null);                                 // Remove Description
@@ -144,7 +149,7 @@ public class ChartFragment extends Fragment {
         chart.setMarker(elevationMarker);                           // Set the new marker to the chart
         chart.setVisibleXRangeMaximum(10);
         chart.moveViewTo(chart.getData().getEntryCount(), 0, YAxis.AxisDependency.RIGHT);
-        chart.setViewPortOffsets(60f, 0f, 60f, 120f);
+        chart.setViewPortOffsets(0f, 0f, 0f, 120f);
 
         // Add a highlight listener
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
