@@ -31,8 +31,6 @@ import java.util.List;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DateFormatter;
 
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_NORMAL;
-import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_SAD;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY_SAD;
 
@@ -41,31 +39,35 @@ public class ChartFragment extends Fragment {
 
     final String TAG = "ChartFragment";
 
+    private View rootView;
+    private EmotionEntries emotionEntries;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
+        rootView = inflater.inflate(R.layout.fragment_chart, container, false);
+        emotionEntries = EmotionEntries.getInstance();
 
-        //TODO: Change getData ArrayList
-        ArrayList<Integer> data = getData();    // Gets the data from a save file or sth
-        setupGraph(rootView, data);             // Makes/Styles the chart with given ArrayList
-        setupCircles(rootView, data);           // Makes/Styles/Calculates the circles with given value
+        emotionEntries.setEntriesChangeListener(new EmotionEntries.EntriesChangedListener() {
+            @Override
+            public void onChanged() {
+                setupElements();
+            }
+        });
+
+        setupElements();
 
         return rootView;
     }
 
-    private ArrayList<Integer> getData() {
-
-        ArrayList<Integer> mData = new ArrayList<>();
-        mData.add(FEELING_NORMAL);
-        mData.add(FEELING_SAD);
-        mData.add(FEELING_VERY_HAPPY);
-
-        return mData;
+    private void setupElements() {
+        ArrayList<EmotionEntry> data = EmotionEntries.getEntries();     // Gets the data from a save file or sth
+        setupGraph(rootView, data);                                     // Makes/Styles the chart with given ArrayList
+        setupCircles(rootView, data);                                   // Makes/Styles/Calculates the circles with given value
     }
 
-    private void setupGraph(View rootView, ArrayList<Integer> data) {
+    private void setupGraph(View rootView, ArrayList<EmotionEntry> data) {
 
         LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
 
@@ -74,8 +76,8 @@ public class ChartFragment extends Fragment {
                 // Entry Array
                 List<Entry> happinessEntries = new ArrayList<>();
                 int count = 1;
-                for (int entry : data) {
-                    happinessEntries.add(new Entry(count, entry));
+                for (EmotionEntry entry : data) {
+                    happinessEntries.add(new Entry(count, entry.getMood()));
                     count++;
                 }
 
@@ -112,18 +114,18 @@ public class ChartFragment extends Fragment {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setTextColor(Color.WHITE);
-        chart.getXAxis().setValueFormatter(new DateFormatter());    // Format x values to see day
+        chart.getXAxis().setValueFormatter(new DateFormatter(data));    // Format x values to see day
         chart.getXAxis().setGranularity(1);                         // Just whole numbers are represented
-        chart.getXAxis().setLabelRotationAngle(45);
-        chart.getXAxis().setLabelCount(15);                         // Max labels in the chart
+        chart.getXAxis().setLabelRotationAngle(30);
+        chart.getXAxis().setLabelCount(10);                         // Max labels in the chart
+        chart.getXAxis().setTextSize(8);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);   // X Values are at the bottom of the chart
 
         // Always draw as high as max values
         chart.getAxisLeft().setAxisMaximum(FEELING_VERY_HAPPY + 5); // 5 Offset
-        chart.getAxisLeft().setAxisMinimum(FEELING_VERY_SAD - 5);
+        chart.getAxisLeft().setAxisMinimum(FEELING_VERY_SAD - 3);
 
-        chart.getAxisLeft().setDrawLabels(false);                   // Disable all y Axis
-        chart.getAxisLeft().setDrawAxisLine(false);
+        chart.getAxisLeft().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
 
         chart.setDescription(null);                                 // Remove Description
@@ -140,8 +142,9 @@ public class ChartFragment extends Fragment {
                 -(elevationMarker.getWidth() / 2),
                 -(elevationMarker.getHeight() / 2));                // Center the marker layout
         chart.setMarker(elevationMarker);                           // Set the new marker to the chart
-        chart.setVisibleXRangeMaximum(15);
+        chart.setVisibleXRangeMaximum(10);
         chart.moveViewTo(chart.getData().getEntryCount(), 0, YAxis.AxisDependency.RIGHT);
+        chart.setViewPortOffsets(60f, 0f, 60f, 120f);
 
         // Add a highlight listener
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -176,7 +179,7 @@ public class ChartFragment extends Fragment {
         dialog.show();  // Display the dialog
     }
 
-    private void setupCircles(View rootView, ArrayList<Integer> data) {
+    private void setupCircles(View rootView, ArrayList<EmotionEntry> data) {
         final ArcProgress donutProgress1 = (ArcProgress) rootView.findViewById(R.id.donutProgress1);
         final ArcProgress donutProgress2 = (ArcProgress) rootView.findViewById(R.id.donutProgress2);
 
@@ -189,8 +192,8 @@ public class ChartFragment extends Fragment {
             int sum = 0;
             int count = 0;
             int average = 0;
-            for (int entry : data) {
-                sum += entry;
+            for (EmotionEntry entry : data) {
+                sum += entry.getMood();
                 count++;
             }
             average = sum / count;

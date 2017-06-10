@@ -1,4 +1,4 @@
-package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
+package fhtw.bsa2.gafert_steiner.ue5_diaryapp.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
