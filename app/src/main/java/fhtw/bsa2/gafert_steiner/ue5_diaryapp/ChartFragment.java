@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -175,7 +176,6 @@ public class ChartFragment extends Fragment {
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                //TODO: Make Entry Dialog Display correct values
                 makeEntryDialog(e, data);
             }
 
@@ -200,17 +200,16 @@ public class ChartFragment extends Fragment {
 
         //Get the emotionEntry
         EmotionEntry emotionEntry = data.get((int) e.getX());
-        arrayAdapter.add(emotionEntry);  // Add the entry values to the array (temporary)
+        arrayAdapter.add(emotionEntry);  // Add the entry values to the array
         dialog.show();  // Display the dialog
     }
 
     private void setupCircles(View rootView, ArrayList<EmotionEntry> data) {
         final ArcProgress happinessPercArc = (ArcProgress) rootView.findViewById(R.id.happyArc);
-        final ArcProgress stdDevArc = (ArcProgress) rootView.findViewById(R.id.sadArc);
+        final ArcProgress stdDevArc = (ArcProgress) rootView.findViewById(R.id.stdDevArc);
 
-        final View sadnessButton = rootView.findViewById(R.id.stdDevArc);
-        final View happinessButton = rootView.findViewById(R.id.happyCircle);
-
+        final View stdDevButton = rootView.findViewById(R.id.stdDevContainer);
+        final View happinessButton = rootView.findViewById(R.id.happinessContainer);
 
         // Get Average
         int sum = 0;
@@ -227,7 +226,7 @@ public class ChartFragment extends Fragment {
         for (EmotionEntry entry : data) {
             temp += (entry.getMood() - average) * (entry.getMood() - average);
         }
-        int standardDeviation = (int) Math.sqrt(temp / count);
+        double standardDeviation = Math.sqrt(temp / count);
 
         float span = FEELING_VERY_HAPPY - FEELING_VERY_SAD; // Span between max and min
         float percentModifier = 100 / span;                 // To fit the values between 0 and 100 percent
@@ -238,15 +237,17 @@ public class ChartFragment extends Fragment {
 
         // Set standard deviation
         if (average != 0) {
-            int percentStdDeviation = (standardDeviation * 100) / Math.abs(average);
+            int percentStdDeviation = (int) ((standardDeviation * percentModifier));
             stdDevArc.setProgress(percentStdDeviation);
         }
+
+        Log.d(TAG, "setupCircles: Standard Deviation = " + standardDeviation);
 
         happinessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int progress = happinessPercArc.getProgress();
-                String title = "You have " + progress + "% percentHappiness";
+                String title = "You have " + progress + "% happiness";
                 String description = "";
 
                 if (progress <= 40) {
@@ -260,6 +261,15 @@ public class ChartFragment extends Fragment {
                 }
 
                 makeCircleDialog(title, description);
+            }
+        });
+
+        stdDevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String titel = "You have " + stdDevArc.getProgress() + "% deviation";
+                String description = "Keep your deviation as low as possible.\n\nA high deviation shows that you are very emotional and/or unstable. A low deviation shows that you tend to feel the same each day.\n\nBut watch out! A low deviation doesn´t mean you are happy.\n\nIt´s best to have a high happiness score and a low standard deviation.";
+                makeCircleDialog(titel, description);
             }
         });
     }
