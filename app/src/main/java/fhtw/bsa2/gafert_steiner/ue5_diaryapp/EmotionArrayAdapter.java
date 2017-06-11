@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,11 +16,10 @@ import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedDrawable;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fhtw.bsa2.gafert_steiner.ue5_diaryapp.helper.BitmapScaler;
 
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_NORMAL;
@@ -71,11 +69,7 @@ public class EmotionArrayAdapter extends ArrayAdapter<EmotionEntry> {
                 reasonTextView.setText("No reason...");
             }
 
-            if (emotionEntry.getPath() != null) {
-                Uri uri = Uri.parse(emotionEntry.getPath());
-                additionalImageView.setImageBitmap(BitmapScaler.lessResolution(emotionEntry.getPath(), 400, 400));
-                additionalImageView.setVisibility(View.VISIBLE);
-            }
+
 
             switch (emotionEntry.getMood()) {
                 case FEELING_VERY_HAPPY:
@@ -95,27 +89,34 @@ public class EmotionArrayAdapter extends ArrayAdapter<EmotionEntry> {
                     break;
             }
 
-            additionalImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Created a new Dialog
-                    Dialog dialog = new Dialog(context, R.style.BetterDialog) {
-                        @Override
-                        public boolean onTouchEvent(MotionEvent event) {
-                            // Tap anywhere to close dialog.
-                            this.dismiss();
-                            return true;
-                        }
-                    };
-                    dialog.setCanceledOnTouchOutside(true);                                   // Can close dialog with touch
-                    dialog.setContentView(R.layout.dialog_selfie);                            // Inflate the layout
-                    RoundedImageView selfie = (RoundedImageView) dialog.findViewById(R.id.selfieDialogView);
-                    Bitmap bitmap = Bitmap.createBitmap(((RoundedDrawable) additionalImageView.getDrawable()).getSourceBitmap());
-                    selfie.setImageBitmap(bitmap);
+            ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
 
-                    dialog.show();
-                }
-            });
+            if (emotionEntry.getPath() != null) {
+                String uri = "file:///" + emotionEntry.getPath();
+                imageLoader.displayImage(uri, additionalImageView);
+
+                additionalImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Created a new Dialog
+                        Dialog dialog = new Dialog(context, R.style.BetterDialog) {
+                            @Override
+                            public boolean onTouchEvent(MotionEvent event) {
+                                // Tap anywhere to close dialog.
+                                this.dismiss();
+                                return true;
+                            }
+                        };
+                        dialog.setCanceledOnTouchOutside(true);                                   // Can close dialog with touch
+                        dialog.setContentView(R.layout.dialog_selfie);                            // Inflate the layout
+                        RoundedImageView selfie = (RoundedImageView) dialog.findViewById(R.id.selfieDialogView);
+                        Bitmap bitmap = Bitmap.createBitmap(((RoundedDrawable) additionalImageView.getDrawable()).getSourceBitmap());
+                        selfie.setImageBitmap(bitmap);
+
+                        dialog.show();
+                    }
+                });
+            }
         }
 
         return view;

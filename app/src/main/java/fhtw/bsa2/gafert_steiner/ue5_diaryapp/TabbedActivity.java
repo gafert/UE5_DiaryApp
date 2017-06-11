@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,6 +104,11 @@ public class TabbedActivity extends AppCompatActivity {
         navigationTabBar.setModels(models);     // Add all tabs
         navigationTabBar.setIsTitled(false);    // Hide Titles from navBar
         navigationTabBar.setViewPager(mViewPager, 0);   // Connect to viewPager
+
+
+        // Create global configuration and initialize ImageLoader with this config
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
     }
 
 
