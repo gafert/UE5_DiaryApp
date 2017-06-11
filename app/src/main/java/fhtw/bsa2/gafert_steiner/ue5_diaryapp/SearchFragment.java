@@ -11,13 +11,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 /**
  * Created by michi on 03.06.17.
  */
 
 public class SearchFragment extends Fragment {
 
-    ArrayAdapter<String> searchListViewAdapter;     // Found search elements are added to this
+    EmotionArrayAdapter arrayAdapter;     // Found search elements are added to this
+    EmotionEntries entries;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,8 +31,15 @@ public class SearchFragment extends Fragment {
         EditText searchEditText = (EditText) rootView.findViewById(R.id.searchEditText);
 
         // ArrayAdapter will be custom
-        searchListViewAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_2, android.R.id.text2);
-        searchListView.setAdapter(searchListViewAdapter);
+        ListView listView = (ListView) rootView.findViewById(R.id.searchListView);
+        arrayAdapter = new EmotionArrayAdapter(getContext(), R.layout.emotion_list_item);
+        listView.setAdapter(arrayAdapter);
+
+        entries = EmotionEntries.getInstance();
+
+        for(EmotionEntry entry: entries.getEntries()){
+            arrayAdapter.add(entry);
+        }
 
         // Called when the user is typing
         // Have instant search response without search button
@@ -41,14 +51,23 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                arrayAdapter.clear();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchListViewAdapter.clear();
+                arrayAdapter.clear();
+                arrayAdapter.notifyDataSetChanged();
+                String text = s.toString();
+                //ArrayList<EmotionEntry> resultEntries = new ArrayList<EmotionEntry>();
 
-                // Implement Search here
-                searchListViewAdapter.add("You are searching for " + s);
+                for(EmotionEntry entry:entries.getEntries()){
+                    if(entry.getReason().contains(text)){
+                        arrayAdapter.add(entry);
+                    }
+                }
+
+
             }
         });
 

@@ -127,4 +127,10 @@ public class EmotionArrayAdapter extends ArrayAdapter<EmotionEntry> {
 
         objects.add(object);
     }
+
+    @Override
+    public void clear() {
+        super.clear();
+        objects.clear();
+    }
 }

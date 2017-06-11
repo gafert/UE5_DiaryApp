@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.listType;
 
@@ -36,7 +38,27 @@ public class EmotionEntries {
 
     public void addEmotion(EmotionEntry newEntry){
         //TODO: Check if today was already entered a day. If so overwrite today´s entry with a new one
-        entryList.add(newEntry);
+        int i=0;
+        boolean duplicate = false;
+        for(EmotionEntry entry: entryList){
+            if(newEntry.getEntryDate().equals(entry.entryDate)){
+                duplicate=true;
+                break;
+            }
+            i++;
+        }
+        if(duplicate==true){
+            entryList.set(i, newEntry);
+        }else{
+            entryList.add(newEntry);
+        }
+
+        Collections.sort(entryList, new Comparator<EmotionEntry>() {
+            public int compare(EmotionEntry o1, EmotionEntry o2) {
+                return o1.getEntryDate().compareTo(o2.getEntryDate());
+            }
+        });
+
 
         // Fire the custom listener
         if (listener != null)
