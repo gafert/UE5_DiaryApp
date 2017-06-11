@@ -51,7 +51,7 @@ public class TabbedActivity extends AppCompatActivity {
 
                 EmotionEntries entries = EmotionEntries.getInstance();
                 ArrayList<EmotionEntry> entryList = gson.fromJson(emotionJson, GlobalVariables.listType);
-                EmotionEntries.setEntryList(entryList);
+                entries.setEntryList(entryList);
             }
 
         } catch (IOException e) {

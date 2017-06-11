@@ -37,7 +37,7 @@ public class SearchFragment extends Fragment {
 
         entries = EmotionEntries.getInstance();
 
-        for(EmotionEntry entry: entries.getEntries()){
+        for(EmotionEntry entry: entries.getEntriesReversed()){
             arrayAdapter.add(entry);
         }
 
@@ -61,7 +61,7 @@ public class SearchFragment extends Fragment {
                 String text = s.toString();
                 //ArrayList<EmotionEntry> resultEntries = new ArrayList<EmotionEntry>();
 
-                for(EmotionEntry entry:entries.getEntries()){
+                for(EmotionEntry entry:entries.getEntriesReversed()){
                     if(entry.getReason().contains(text)){
                         arrayAdapter.add(entry);
                     }
