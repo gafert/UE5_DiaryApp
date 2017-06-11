@@ -18,15 +18,21 @@ public class EmotionEntries {
 
     private static EmotionEntries entries;
     private static ArrayList<EmotionEntry> entryList;
+    private static ArrayList<EmotionEntry> entryListReversed;
     private EntriesChangedListener listener;
 
     private EmotionEntries() {
         this.listener = null;
         entryList = new ArrayList<EmotionEntry>();
+        entryListReversed = new ArrayList<EmotionEntry>();
     }
 
     public static ArrayList<EmotionEntry> getEntries() {
         return entryList;
+    }
+
+    public static ArrayList<EmotionEntry> getEntriesReversed() {
+        return entryListReversed;
     }
 
     public static EmotionEntries getInstance() {
@@ -37,7 +43,7 @@ public class EmotionEntries {
     }
 
     public void addEmotion(EmotionEntry newEntry){
-        //TODO: Check if today was already entered a day. If so overwrite today´s entry with a new one
+
         int i=0;
         boolean duplicate = false;
         for(EmotionEntry entry: entryList){
@@ -55,10 +61,12 @@ public class EmotionEntries {
 
         Collections.sort(entryList, new Comparator<EmotionEntry>() {
             public int compare(EmotionEntry o1, EmotionEntry o2) {
-                return o1.getEntryDate().compareTo(o2.getEntryDate());
+                return o2.getEntryDate().compareTo(o1.getEntryDate());
             }
         });
 
+
+        refreshReverseList();
 
         // Fire the custom listener
         if (listener != null)
@@ -90,7 +98,18 @@ public class EmotionEntries {
         void onChanged();
     }
 
-    public static void setEntryList(ArrayList<EmotionEntry> entryList) {
+    public void setEntryList(ArrayList<EmotionEntry> entryList) {
         EmotionEntries.entryList = entryList;
+        refreshReverseList();
+    }
+
+    public void refreshReverseList(){
+        entryListReversed = (ArrayList<EmotionEntry>) entryList.clone();
+
+        Collections.sort(entryList, new Comparator<EmotionEntry>() {
+            public int compare(EmotionEntry o1, EmotionEntry o2) {
+                return o1.getEntryDate().compareTo(o2.getEntryDate());
+            }
+        });
     }
 }
