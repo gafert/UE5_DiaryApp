@@ -24,7 +24,7 @@ public class FileIO {
 
     private static FileIO fileIOInstance;
     private static File dataFile;
-    private static final String FILENAME = "myDocuments.txt";
+    private static final String FILENAME = "documents.txt";
     private final String TAG="FileIO";
     public static Context context;
 
@@ -45,9 +45,7 @@ public class FileIO {
         // Get the directory for the app's private pictures directory.
         dataFile = new File(context.getExternalFilesDir(
                 Environment.DIRECTORY_DOCUMENTS), FILENAME);
-        if (!dataFile.mkdirs()) {
-            Log.e(Chart.LOG_TAG, "Directory not created");
-        }
+
     }
 
     public static boolean isExternalStorageWritable() {
