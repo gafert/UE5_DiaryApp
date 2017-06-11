@@ -1,4 +1,4 @@
-package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
+package fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion;
 
 import android.util.Log;
 
@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.FileIO;
 
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.listType;
 
@@ -84,11 +86,6 @@ public class EmotionEntries {
         }
     }
 
-    // Assign the listener implementing events interface that will receive the events
-    public void setEntriesChangeListener(EntriesChangedListener listener) {
-        this.listener = listener;
-    }
-
     public void setEntryList(ArrayList<EmotionEntry> entryList) {
         EmotionEntries.entryList = entryList;
         refreshReverseList();
@@ -119,6 +116,11 @@ public class EmotionEntries {
         // Fire the custom listener
         if (listener != null)
             listener.onChanged();   // Call listener
+    }
+
+    // Assign the listener implementing events interface that will receive the events
+    public void setEntriesChangeListener(EntriesChangedListener listener) {
+        this.listener = listener;
     }
 
     public interface EntriesChangedListener {

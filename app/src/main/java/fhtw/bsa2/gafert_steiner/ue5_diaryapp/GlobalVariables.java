@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntry;
+
 public class GlobalVariables {
     // Static Values for the feeling
     public final static int FEELING_VERY_HAPPY = 20;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    tools:context="fhtw.bsa2.gafert_steiner.ue5_diaryapp.AddFragment">
+    tools:context="fhtw.bsa2.gafert_steiner.ue5_diaryapp.fragment.AddFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

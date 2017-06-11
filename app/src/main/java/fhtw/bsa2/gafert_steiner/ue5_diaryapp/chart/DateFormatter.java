@@ -8,7 +8,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-import fhtw.bsa2.gafert_steiner.ue5_diaryapp.EmotionEntry;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntry;
 
 
 public class DateFormatter implements IAxisValueFormatter {

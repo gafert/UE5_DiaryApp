@@ -20,11 +20,16 @@ import java.util.ArrayList;
 
 import devlight.io.library.ntb.NavigationTabBar;
 import es.dmoral.toasty.Toasty;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntries;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntry;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.fragment.AddFragment;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.fragment.ChartFragment;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.fragment.SearchFragment;
 
 public class TabbedActivity extends AppCompatActivity {
 
     // Tab Titles
-    public final static String[] TITLE = {"Emotion Statistics", "Add Entry", "Search"};
+    public final static String[] TITLE = {"Timeline", "Add Entry", "Search"};
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -82,7 +87,7 @@ public class TabbedActivity extends AppCompatActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         ContextCompat.getDrawable(this, R.drawable.ic_history_white_48dp),  // Set the Icon
-                        ContextCompat.getColor(this, R.color.navBar1)                   // Set the Text
+                        ContextCompat.getColor(this, R.color.navBar1)                       // Set the Text
                 ).title(TITLE[0])
                         .build()
         );
@@ -101,10 +106,9 @@ public class TabbedActivity extends AppCompatActivity {
                         .build()
         );
 
-        navigationTabBar.setModels(models);     // Add all tabs
-        navigationTabBar.setIsTitled(false);    // Hide Titles from navBar
+        navigationTabBar.setModels(models);             // Add all tabs
+        navigationTabBar.setIsTitled(false);            // Hide Titles from navBar
         navigationTabBar.setViewPager(mViewPager, 0);   // Connect to viewPager
-
 
         // Create global configuration and initialize ImageLoader with this config
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();

@@ -1,4 +1,4 @@
-package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
+package fhtw.bsa2.gafert_steiner.ue5_diaryapp.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -34,6 +34,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.R;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntries;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntry;
 import info.hoang8f.widget.FButton;
 
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_HAPPY;
@@ -46,10 +49,10 @@ import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.REQUEST_TAKE
 
 public class AddFragment extends Fragment {
 
-    ImageView additonalImageView;                   // Shows a taken image
+    ImageView additionalImageView;                   // Shows a taken image
     TextView dateTextView;                          // Shows the date
     RadioGroup emotionPicker;                       // Sets the emotionValue
-    String inProgressPhotopath;                        // Get the photo path
+    String inProgressPhotoPath;                        // Get the photo path
     String realPhotoPath;
     Integer emotionValue = FEELING_NORMAL;          // Get the emotion
     EditText reasonTextView;                        // Get the reason
@@ -66,7 +69,7 @@ public class AddFragment extends Fragment {
 
         emotionPicker = (RadioGroup) rootView.findViewById(R.id.emotionGroup);
         dateTextView = (TextView) rootView.findViewById(R.id.dateTextView);
-        additonalImageView = (ImageView) rootView.findViewById(R.id.additionalImageView);
+        additionalImageView = (ImageView) rootView.findViewById(R.id.additionalImageView);
         reasonTextView = (EditText) rootView.findViewById(R.id.reasonTextView);
 
         try {
@@ -163,16 +166,16 @@ public class AddFragment extends Fragment {
                 // Reset Add site
                 emotionPicker.check(R.id.normalButton);
                 reasonTextView.setText(null);
-                additonalImageView.setImageURI(null);
-                additonalImageView.setVisibility(View.GONE);
-                inProgressPhotopath = null;
+                additionalImageView.setImageURI(null);
+                additionalImageView.setVisibility(View.GONE);
+                inProgressPhotoPath = null;
                 realPhotoPath = null;
 
                 //Toasty.warning(getContext(), "Saving not yet implemented", Toast.LENGTH_SHORT).show();
             }
         });
 
-        additonalImageView.setOnClickListener(new View.OnClickListener() {
+        additionalImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Created a new Dialog
@@ -187,7 +190,7 @@ public class AddFragment extends Fragment {
                 expandedImageDialog.setCanceledOnTouchOutside(true);                                   // Can close expandedImageDialog with touch
                 expandedImageDialog.setContentView(R.layout.dialog_selfie);                            // Inflate the layout
                 RoundedImageView expandedImageView = (RoundedImageView) expandedImageDialog.findViewById(R.id.selfieDialogView);
-                Bitmap mBitmap = Bitmap.createBitmap(((RoundedDrawable) additonalImageView.getDrawable()).getSourceBitmap());
+                Bitmap mBitmap = Bitmap.createBitmap(((RoundedDrawable) additionalImageView.getDrawable()).getSourceBitmap());
                 expandedImageView.setImageBitmap(mBitmap);
                 expandedImageDialog.show();
             }
@@ -226,13 +229,13 @@ public class AddFragment extends Fragment {
                 File tmpImage = new File(realPhotoPath);
                 tmpImage.delete();
             }
-            realPhotoPath = inProgressPhotopath;
+            realPhotoPath = inProgressPhotoPath;
             Uri imagePath = Uri.parse(realPhotoPath);
-            additonalImageView.setImageURI(imagePath);
-            additonalImageView.setVisibility(View.VISIBLE);
+            additionalImageView.setImageURI(imagePath);
+            additionalImageView.setVisibility(View.VISIBLE);
         } else {
             // Delete tmp image file when
-            File tmpImage = new File(inProgressPhotopath);
+            File tmpImage = new File(inProgressPhotoPath);
             tmpImage.delete();
         }
     }
@@ -249,7 +252,7 @@ public class AddFragment extends Fragment {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        inProgressPhotopath = image.getAbsolutePath();
+        inProgressPhotoPath = image.getAbsolutePath();
         return image;
     }
 }

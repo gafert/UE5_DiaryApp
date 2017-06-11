@@ -1,4 +1,4 @@
-package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
+package fhtw.bsa2.gafert_steiner.ue5_diaryapp.fragment;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -26,8 +26,12 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.R;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.ChartMarker;
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart.DateFormatter;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionArrayAdapter;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntries;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntry;
 
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_VERY_SAD;
@@ -99,7 +103,7 @@ public class ChartFragment extends Fragment {
                 // Colors for styling
                 int[] colors = new int[3];
                 colors[0] = ContextCompat.getColor(getContext(), R.color.colorAccent);
-                colors[1] = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+                colors[1] = ContextCompat.getColor(getContext(), R.color.backGroundGradient1);
 
                 // Make a new data set with entries
                 LineDataSet happinessDateSet = new LineDataSet(happinessEntries, "Happiness");

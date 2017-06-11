@@ -1,4 +1,4 @@
-package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
+package fhtw.bsa2.gafert_steiner.ue5_diaryapp.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.R;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionArrayAdapter;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntries;
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion.EmotionEntry;
 
 public class SearchFragment extends Fragment {
 

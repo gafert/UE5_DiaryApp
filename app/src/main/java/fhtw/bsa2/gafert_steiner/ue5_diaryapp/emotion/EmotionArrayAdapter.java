@@ -1,4 +1,4 @@
-package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
+package fhtw.bsa2.gafert_steiner.ue5_diaryapp.emotion;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -21,6 +21,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import fhtw.bsa2.gafert_steiner.ue5_diaryapp.R;
+
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_HAPPY;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_NORMAL;
 import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.FEELING_SAD;
@@ -42,7 +44,6 @@ public class EmotionArrayAdapter extends ArrayAdapter<EmotionEntry> {
 
         this.context = context;
         this.resource = resource;
-
         objects = new ArrayList<>();
     }
 
@@ -68,8 +69,6 @@ public class EmotionArrayAdapter extends ArrayAdapter<EmotionEntry> {
             } else {
                 reasonTextView.setText("No reason...");
             }
-
-
 
             switch (emotionEntry.getMood()) {
                 case FEELING_VERY_HAPPY:
@@ -125,7 +124,6 @@ public class EmotionArrayAdapter extends ArrayAdapter<EmotionEntry> {
     @Override
     public void add(@Nullable EmotionEntry object) {
         super.add(object);
-
         objects.add(object);
     }
 
