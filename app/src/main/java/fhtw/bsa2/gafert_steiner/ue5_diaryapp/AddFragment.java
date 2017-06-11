@@ -49,7 +49,8 @@ public class AddFragment extends Fragment {
     ImageView additonalImageView;                   // Shows a taken image
     TextView dateTextView;                          // Shows the date
     RadioGroup emotionPicker;                       // Sets the emotionValue
-    String currentPhotoPath;                        // Get the photo path
+    String inProgressPhotopath;                        // Get the photo path
+    String realPhotoPath;
     Integer emotionValue = FEELING_NORMAL;          // Get the emotion
     EditText reasonTextView;                        // Get the reason
     Date date;                                      // Get the date
@@ -137,7 +138,7 @@ public class AddFragment extends Fragment {
             public void onClick(View v) {
                 EmotionEntries entries = EmotionEntries.getInstance();
                 String addInf = reasonTextView.getText().toString();
-                EmotionEntry emotionEntry = new EmotionEntry(date, emotionValue, currentPhotoPath, addInf);
+                EmotionEntry emotionEntry = new EmotionEntry(date, emotionValue, realPhotoPath, addInf);
                 entries.addEmotion(emotionEntry);
 
                 // Created a new Dialog
@@ -157,9 +158,11 @@ public class AddFragment extends Fragment {
 
                 // Reset Add site
                 emotionPicker.check(R.id.normalButton);
-                reasonTextView.setText("");
+                reasonTextView.setText(null);
                 additonalImageView.setImageURI(null);
                 additonalImageView.setVisibility(View.GONE);
+                inProgressPhotopath = null;
+                realPhotoPath = null;
 
                 //Toasty.warning(getContext(), "Saving not yet implemented", Toast.LENGTH_SHORT).show();
             }
@@ -214,15 +217,19 @@ public class AddFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            //Bundle extras = data.getExtras();
-            //Bitmap imageBitmap = Bitmap.createBitmap((Bitmap) extras.get("data"));
-
-            Uri imagePath = Uri.parse(currentPhotoPath);
-
-            //additonalImageView.setImageBitmap(imageBitmap);
-
+            // Delete old Photo if new is captured
+            if (realPhotoPath != null) {
+                File tmpImage = new File(realPhotoPath);
+                tmpImage.delete();
+            }
+            realPhotoPath = inProgressPhotopath;
+            Uri imagePath = Uri.parse(realPhotoPath);
             additonalImageView.setImageURI(imagePath);
             additonalImageView.setVisibility(View.VISIBLE);
+        } else {
+            // Delete tmp image file when
+            File tmpImage = new File(inProgressPhotopath);
+            tmpImage.delete();
         }
     }
 
@@ -238,7 +245,7 @@ public class AddFragment extends Fragment {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
+        inProgressPhotopath = image.getAbsolutePath();
         return image;
     }
 }

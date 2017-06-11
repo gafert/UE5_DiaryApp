@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -41,20 +40,19 @@ public class TabbedActivity extends AppCompatActivity {
 
         setTitle(TITLE[0]);     // Set title to first fragment title
 
+        // Load Entries from file
         try {
             FileIO IO = FileIO.getFileIOInstance();
-            IO.setContext(this.getBaseContext());
+            FileIO.setContext(this.getBaseContext());
             String emotionJson = IO.readEmotions();
 
-            if(emotionJson!=null){
+            if (emotionJson != null) {
                 Gson gson = new Gson();
 
                 EmotionEntries entries = EmotionEntries.getInstance();
                 ArrayList<EmotionEntry> entryList = gson.fromJson(emotionJson, GlobalVariables.listType);
-                entries.setEntryList(entryList);
+                EmotionEntries.setEntryList(entryList);
             }
-
-
 
         } catch (IOException e) {
             e.printStackTrace();

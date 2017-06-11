@@ -200,7 +200,7 @@
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:id="@+id/happyCircle"
+                        android:id="@+id/happinessContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -232,7 +232,7 @@
                     </FrameLayout>
 
                     <FrameLayout
-                        android:id="@+id/stdDevArc"
+                        android:id="@+id/stdDevContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -242,7 +242,7 @@
                         android:paddingTop="20dp">
 
                         <com.github.lzyzsd.circleprogress.ArcProgress
-                            android:id="@+id/sadArc"
+                            android:id="@+id/stdDevArc"
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:layout_gravity="center_horizontal"
