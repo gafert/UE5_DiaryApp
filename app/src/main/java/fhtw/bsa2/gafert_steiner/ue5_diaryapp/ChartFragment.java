@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,79 +205,63 @@ public class ChartFragment extends Fragment {
     }
 
     private void setupCircles(View rootView, ArrayList<EmotionEntry> data) {
-        final ArcProgress donutProgress1 = (ArcProgress) rootView.findViewById(R.id.happyArc);
-        final ArcProgress donutProgress2 = (ArcProgress) rootView.findViewById(R.id.sadArc);
+        final ArcProgress happinessPercArc = (ArcProgress) rootView.findViewById(R.id.happyArc);
+        final ArcProgress stdDevArc = (ArcProgress) rootView.findViewById(R.id.sadArc);
 
-        final View sadnessButton = rootView.findViewById(R.id.sadCircle);
+        final View sadnessButton = rootView.findViewById(R.id.stdDevArc);
         final View happinessButton = rootView.findViewById(R.id.happyCircle);
 
-        try {
 
-            // Get Average
-            int sum = 0;
-            int count = 0;
-            int average = 0;
-            for (EmotionEntry entry : data) {
-                sum += entry.getMood();
-                count++;
-            }
-            average = sum / count;
-
-
-            float span = FEELING_VERY_HAPPY - FEELING_VERY_SAD; // Span between max and min
-            float percentModifier = 100 / span;
-            int happiness = (int) ((20 + average) * percentModifier);       // 20 +/- the average; if + happy; if - sad
-            int sadness = 100 - happiness;                      // Negative to happiness; 100 are percent
-
-            donutProgress1.setProgress(happiness);
-            donutProgress2.setProgress(sadness);
-
-            happinessButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int progress = donutProgress1.getProgress();
-                    String title = "You have " + progress + "% happiness";
-                    String description = "";
-
-                    if (progress <= 40) {
-                        description = getString(R.string.feeling_happy_40);
-                    } else if (progress > 40 && progress < 50) {
-                        description = getString(R.string.feeling_happy_40_50);
-                    } else if (progress == 50) {
-                        description = getString(R.string.feeling_happy_50);
-                    } else if (progress > 50) {
-                        description = getString(R.string.feeling_happy_50_100);
-                    }
-
-                    makeCircleDialog(title, description);
-                }
-            });
-
-            sadnessButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Currently the same as the other button
-                    // Maybe change in the future
-                    int progress = donutProgress1.getProgress();
-                    String title = "You have " + donutProgress2.getProgress() + "% sadness";
-                    String description = "";
-
-                    if (progress <= 40) {
-                        description = getString(R.string.feeling_happy_40);
-                    } else if (progress > 40 && progress < 50) {
-                        description = getString(R.string.feeling_happy_40_50);
-                    } else if (progress == 50) {
-                        description = getString(R.string.feeling_happy_50);
-                    } else if (progress > 50) {
-                        description = getString(R.string.feeling_happy_50_100);
-                    }
-
-                    makeCircleDialog(title, description);
-                }
-            });
-        } catch (Exception e) {
-            Log.e(TAG, "setupCircles: No items in array");
+        // Get Average
+        int sum = 0;
+        int count = 0;
+        int average = 0;
+        for (EmotionEntry entry : data) {
+            sum += entry.getMood();
+            count++;
         }
+        average = sum / count;
+
+        // Get standard deviation
+        float temp = 0;
+        for (EmotionEntry entry : data) {
+            temp += (entry.getMood() - average) * (entry.getMood() - average);
+        }
+        int standardDeviation = (int) Math.sqrt(temp / count);
+
+        float span = FEELING_VERY_HAPPY - FEELING_VERY_SAD; // Span between max and min
+        float percentModifier = 100 / span;                 // To fit the values between 0 and 100 percent
+
+        // Set happinessPercent
+        int percentHappiness = (int) ((20 + average) * percentModifier);       // 20 +/- the average; if + happy; if - sad
+        happinessPercArc.setProgress(percentHappiness);
+
+        // Set standard deviation
+        if (average != 0) {
+            int percentStdDeviation = (standardDeviation * 100) / Math.abs(average);
+            stdDevArc.setProgress(percentStdDeviation);
+        }
+
+        happinessButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int progress = happinessPercArc.getProgress();
+                String title = "You have " + progress + "% percentHappiness";
+                String description = "";
+
+                if (progress <= 40) {
+                    description = getString(R.string.feeling_happy_40);
+                } else if (progress > 40 && progress < 50) {
+                    description = getString(R.string.feeling_happy_40_50);
+                } else if (progress == 50) {
+                    description = getString(R.string.feeling_happy_50);
+                } else if (progress > 50) {
+                    description = getString(R.string.feeling_happy_50_100);
+                }
+
+                makeCircleDialog(title, description);
+            }
+        });
     }
 
     private void makeCircleDialog(String title, String description) {
@@ -295,6 +278,7 @@ public class ChartFragment extends Fragment {
 
         dialog.show();  // Display the dialog
     }
+
 }
 
 
