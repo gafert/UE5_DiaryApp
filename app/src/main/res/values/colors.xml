@@ -18,5 +18,6 @@
     <color name="roundedRectGradient2">#24242e</color>
 
     <color name="searchBar">#111115</color>
+    <color name="graph">#44000000</color>
 
 </resources>

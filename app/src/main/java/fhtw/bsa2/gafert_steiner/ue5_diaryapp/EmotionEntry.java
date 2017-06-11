@@ -2,10 +2,6 @@ package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
 
 import java.util.Date;
 
-/**
- * Created by Fabian on 08.06.2017.
- */
-
 public class EmotionEntry {
 
     Date entryDate;

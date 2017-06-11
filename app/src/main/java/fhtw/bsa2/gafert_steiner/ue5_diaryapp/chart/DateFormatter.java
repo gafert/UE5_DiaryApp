@@ -1,7 +1,6 @@
 package fhtw.bsa2.gafert_steiner.ue5_diaryapp.chart;
 
 import android.icu.text.SimpleDateFormat;
-import android.util.Log;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
@@ -11,9 +10,6 @@ import java.util.Date;
 
 import fhtw.bsa2.gafert_steiner.ue5_diaryapp.EmotionEntry;
 
-/**
- * Created by michi on 08.06.17.
- */
 
 public class DateFormatter implements IAxisValueFormatter {
 
@@ -34,12 +30,12 @@ public class DateFormatter implements IAxisValueFormatter {
 
         if (!emotionEnries.isEmpty()) {
             try {
-                EmotionEntry emotionEntry = emotionEnries.get((int) value - 1);
+                EmotionEntry emotionEntry = emotionEnries.get((int) value);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E d. MMM");
                 Date date = emotionEntry.getEntryDate();
                 newDate = simpleDateFormat.format(date);                                           // Set the date to the text
             } catch (Exception e) {
-                Log.e("AddFragment", "onDateSet: Could not parse to date string");
+                //Log.e("AddFragment", "onDateSet: Could not parse to date string");
             }
         }
 

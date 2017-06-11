@@ -19,7 +19,7 @@ import es.dmoral.toasty.Toasty;
 public class TabbedActivity extends AppCompatActivity {
 
     // Tab Titles
-    public final static String[] TITLE = {"Feelings", "Add Entry", "Search"};
+    public final static String[] TITLE = {"Emotion Statistics", "Add Entry", "Search"};
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -32,7 +32,7 @@ public class TabbedActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.viewPagerContainer);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         setTitle(TITLE[0]);     // Set title to first fragment title
@@ -55,7 +55,7 @@ public class TabbedActivity extends AppCompatActivity {
         });
 
         // Add custom Navigation Bar
-        final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
+        final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.navigationTabBar);
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(
                 new NavigationTabBar.Model.Builder(

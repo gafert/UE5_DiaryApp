@@ -1,229 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:scrollbars="none"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".TabbedActivity">
 
     <LinearLayout
+        android:id="@+id/noDataView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="Hi, there!"
+            android:textSize="40sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="It looks like you\nhave not added your"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="EMOTIONS"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textSize="50sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="You can add some\nin the + tab below"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_arrow_down_white_48dp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/dataView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:visibility="visible">
 
         <LinearLayout
-            android:id="@+id/firstPage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <!--com.db.chart.view.BarChartView
-                    android:id="@+id/hapinessChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp">
-
-                </com.db.chart.view.BarChartView-->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="24dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginBottom="46dp"
-                        android:background="@color/grey"
-                        android:gravity="center" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginBottom="46dp"
-                        android:background="@color/grey"
-                        android:gravity="center" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginBottom="46dp"
-                        android:background="@color/grey"
-                        android:gravity="center" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginBottom="46dp"
-                        android:background="@color/grey"
-                        android:gravity="center" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginBottom="46dp"
-                        android:background="@color/grey"
-                        android:gravity="center" />
-                </LinearLayout>
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="-15dp"
-                    android:layout_marginRight="-15dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="9dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        app:srcCompat="@drawable/heart_eyes_emoji" />
-
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        app:srcCompat="@drawable/slightly_smiling_face_emoji" />
-
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        app:srcCompat="@drawable/confused_face_emoji" />
-
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        app:srcCompat="@drawable/sad_face_emoji" />
-
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        app:srcCompat="@drawable/loudly_crying_face_emoji" />
-                </LinearLayout>
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAccent" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
                 <FrameLayout
-                    android:id="@+id/happinessButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect_gradient_background"
-                    android:paddingBottom="20dp"
-                    android:paddingTop="20dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:background="@color/graph"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp">
 
-                    <com.github.lzyzsd.circleprogress.ArcProgress
-                        android:id="@+id/donutProgress1"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        android:layout_gravity="center_horizontal"
-                        app:arc_finished_color="@color/colorAccent"
-                        app:arc_text_color="@color/colorAccent"
-                        app:arc_unfinished_color="@color/darkgrey" />
-
-                    <TextView
-                        android:id="@+id/textView2"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="120dp"
-                        android:layout_weight="1"
-                        android:text="Happiness"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="24dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginBottom="46dp"
+                            android:background="@color/grey"
+                            android:gravity="center" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginBottom="46dp"
+                            android:background="@color/grey"
+                            android:gravity="center" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginBottom="46dp"
+                            android:background="@color/grey"
+                            android:gravity="center" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginBottom="46dp"
+                            android:background="@color/grey"
+                            android:gravity="center" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginBottom="46dp"
+                            android:background="@color/grey"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginRight="-15dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="7dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="23dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:srcCompat="@drawable/heart_eyes_emoji" />
+
+                        <ImageView
+                            android:layout_width="23dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:srcCompat="@drawable/slightly_smiling_face_emoji" />
+
+                        <ImageView
+                            android:layout_width="23dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:srcCompat="@drawable/confused_face_emoji" />
+
+                        <ImageView
+                            android:layout_width="23dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:srcCompat="@drawable/sad_face_emoji" />
+
+                        <ImageView
+                            android:layout_width="23dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:srcCompat="@drawable/loudly_crying_face_emoji" />
+                    </LinearLayout>
                 </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/sadnessButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorAccent" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect_gradient_background"
-                    android:paddingBottom="20dp"
-                    android:paddingTop="20dp">
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-                    <com.github.lzyzsd.circleprogress.ArcProgress
-                        android:id="@+id/donutProgress2"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        android:layout_gravity="center_horizontal"
-                        app:arc_finished_color="@color/colorAccent"
-                        app:arc_text_color="@color/colorAccent"
-                        app:arc_unfinished_color="@color/darkgrey" />
-
-                    <TextView
-                        android:id="@+id/textView3"
+                    <FrameLayout
+                        android:id="@+id/happyCircle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="120dp"
+                        android:layout_margin="10dp"
                         android:layout_weight="1"
-                        android:text="Sadness"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
-                </FrameLayout>
+                        android:background="@drawable/rounded_rect_gradient_background"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp">
+
+                        <com.github.lzyzsd.circleprogress.ArcProgress
+                            android:id="@+id/happyArc"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center_horizontal"
+                            app:arc_finished_color="@color/colorAccent"
+                            app:arc_suffix_text_padding="8dp"
+                            app:arc_text_color="@color/colorAccent"
+                            app:arc_unfinished_color="@color/darkgrey" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="120dp"
+                            android:layout_weight="1"
+                            android:text="Happiness"
+                            android:textAlignment="center"
+                            android:textSize="18sp" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/sadCircle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_rect_gradient_background"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp">
+
+                        <com.github.lzyzsd.circleprogress.ArcProgress
+                            android:id="@+id/sadArc"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center_horizontal"
+                            app:arc_finished_color="@color/colorAccent"
+                            app:arc_suffix_text_padding="8dp"
+                            app:arc_text_color="@color/colorAccent"
+                            app:arc_unfinished_color="@color/darkgrey" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="120dp"
+                            android:layout_weight="1"
+                            android:text="Sadness"
+                            android:textAlignment="center"
+                            android:textSize="18sp" />
+                    </FrameLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+</FrameLayout>
 

@@ -46,31 +46,35 @@ import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.REQUEST_TAKE
 
 public class AddFragment extends Fragment {
 
-    public ImageView selfieView;
-    public String currentPhotoPath = "";
-    public Integer emotionValue = FEELING_NORMAL;
-    public EditText additionalInfo;
-    public TextView dateText;
-
-    // Use this to get the date
-    // Date needs to be formatted to before saving SAVE_DATE_FORMAT
-    private Date date;
+    ImageView additonalImageView;                   // Shows a taken image
+    TextView dateTextView;                          // Shows the date
+    RadioGroup emotionPicker;                       // Sets the emotionValue
+    String currentPhotoPath;                        // Get the photo path
+    Integer emotionValue = FEELING_NORMAL;          // Get the emotion
+    EditText reasonTextView;                        // Get the reason
+    Date date;                                      // Get the date
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_add, container, false);
 
-        ImageButton dateButton = (ImageButton) rootView.findViewById(R.id.dateButton);
-        ImageButton cameraButton = (ImageButton) rootView.findViewById(R.id.cameraButton);
+        ImageButton dateImageButton = (ImageButton) rootView.findViewById(R.id.dateButton);
+        ImageButton cameraImageButton = (ImageButton) rootView.findViewById(R.id.cameraButton);
         FButton submitButton = (FButton) rootView.findViewById(R.id.submitButton);
-        RadioGroup emotion = (RadioGroup) rootView.findViewById(R.id.emotion);
 
-        dateText = (TextView) rootView.findViewById(R.id.dateTextView);
-        selfieView = (ImageView) rootView.findViewById(R.id.selfie);
-        additionalInfo = (EditText) rootView.findViewById(R.id.additionalInfo);
+        emotionPicker = (RadioGroup) rootView.findViewById(R.id.emotionGroup);
+        dateTextView = (TextView) rootView.findViewById(R.id.dateTextView);
+        additonalImageView = (ImageView) rootView.findViewById(R.id.additionalImageView);
+        reasonTextView = (EditText) rootView.findViewById(R.id.reasonTextView);
 
-        emotion.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        // Set Current Date with format to TextView
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d. MMM yyyy");
+        final String currentDateAndTime = simpleDateFormat.format(new Date());
+        date = new Date();
+        dateTextView.setText(currentDateAndTime);
+
+        emotionPicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
@@ -93,17 +97,12 @@ public class AddFragment extends Fragment {
             }
         });
 
-
-        // Set Current Date with format to TextView
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d. MMM yyyy");
-        final String currentDateAndTime = simpleDateFormat.format(new Date());
-        dateText.setText(currentDateAndTime);
-
         // Sets new date picked in datePickerDialog
         View.OnClickListener onDatePick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.DatePicker);     // Custom DatePickerDialog with better Colors
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);                 // Only select present and future
                 datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -111,7 +110,7 @@ public class AddFragment extends Fragment {
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMddyyyy");               // Make a new Date with this format
                             date = simpleDateFormat.parse(String.valueOf(month + 1 + "" + dayOfMonth + "" + year));       // Make the date Object to save the date
                             simpleDateFormat = new SimpleDateFormat("d. MMM yyyy");                             // Reformat the date
-                            dateText.setText(simpleDateFormat.format(date));                                    // Set the date to the text
+                            dateTextView.setText(simpleDateFormat.format(date));                                // Set the date to the text
                         } catch (ParseException e) {
                             Log.e("AddFragment", "onDateSet: Could not parse to date string");
                         }
@@ -121,70 +120,69 @@ public class AddFragment extends Fragment {
             }
         };
 
-        // Opens the DatePicker and changes the dateText accordingly
-        dateButton.setOnClickListener(onDatePick);
-        dateText.setOnClickListener(onDatePick);
+        // Opens the DatePicker and changes the dateTextView accordingly
+        dateImageButton.setOnClickListener(onDatePick);
+        dateTextView.setOnClickListener(onDatePick);
 
-        View.OnClickListener cameraClickListerner = new View.OnClickListener() {
+        cameraImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent();
                 //Toasty.warning(getContext(), "Not yet implemented", Toast.LENGTH_SHORT).show();
             }
-        };
-
-        cameraButton.setOnClickListener(cameraClickListerner);
+        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EmotionEntries entries = EmotionEntries.getInstance();
-
-                String addInf = additionalInfo.getText().toString();
-
-                EmotionEntry emotion = new EmotionEntry(date, emotionValue, currentPhotoPath, addInf);
-
-                entries.addEmotion(emotion);
+                String addInf = reasonTextView.getText().toString();
+                EmotionEntry emotionEntry = new EmotionEntry(date, emotionValue, currentPhotoPath, addInf);
+                entries.addEmotion(emotionEntry);
 
                 // Created a new Dialog
-                final Dialog dialog = new Dialog(getActivity(), R.style.BetterDialog);    // Custom Dialog with better style
-                dialog.setCanceledOnTouchOutside(true);                                   // Can close dialog with touch
-                dialog.setContentView(R.layout.dialog_submit);                            // Inflate the layout
-                dialog.show();                                                            // Display the dialog
+                final Dialog submitDialog = new Dialog(getActivity(), R.style.BetterDialog);    // Custom Dialog with better style
+                submitDialog.setCanceledOnTouchOutside(true);                                   // Can close submitDialog with touch
+                submitDialog.setContentView(R.layout.dialog_submit);                            // Inflate the layout
+                submitDialog.show();                                                            // Display the submitDialog
 
                 // Hide Dialog after certain time
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        dialog.dismiss();
+                        submitDialog.dismiss();
                     }
                 }, 1000);
+
+                // Reset Add site
+                emotionPicker.check(R.id.normalButton);
+                reasonTextView.setText("");
+                additonalImageView.setImageURI(null);
+                additonalImageView.setVisibility(View.GONE);
 
                 //Toasty.warning(getContext(), "Saving not yet implemented", Toast.LENGTH_SHORT).show();
             }
         });
 
-        selfieView.setOnClickListener(new View.OnClickListener() {
+        additonalImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Created a new Dialog
-                Dialog dialog = new Dialog(getActivity(), R.style.BetterDialog) {
+                Dialog expandedImageDialog = new Dialog(getActivity(), R.style.BetterDialog) {
                     @Override
                     public boolean onTouchEvent(MotionEvent event) {
-                        // Tap anywhere to close dialog.
+                        // Tap anywhere to close expandedImageDialog.
                         this.dismiss();
                         return true;
                     }
                 };
-                dialog.setCanceledOnTouchOutside(true);                                   // Can close dialog with touch
-                dialog.setContentView(R.layout.dialog_selfie);                            // Inflate the layout
-                RoundedImageView selfie = (RoundedImageView) dialog.findViewById(R.id.selfieDialogView);
-                Bitmap bitmap = Bitmap.createBitmap(((RoundedDrawable) selfieView.getDrawable()).getSourceBitmap());
-                selfie.setImageBitmap(bitmap);
-
-                dialog.show();
+                expandedImageDialog.setCanceledOnTouchOutside(true);                                   // Can close expandedImageDialog with touch
+                expandedImageDialog.setContentView(R.layout.dialog_selfie);                            // Inflate the layout
+                RoundedImageView expandedImageView = (RoundedImageView) expandedImageDialog.findViewById(R.id.selfieDialogView);
+                Bitmap mBitmap = Bitmap.createBitmap(((RoundedDrawable) additonalImageView.getDrawable()).getSourceBitmap());
+                expandedImageView.setImageBitmap(mBitmap);
+                expandedImageDialog.show();
             }
         });
 
@@ -221,10 +219,10 @@ public class AddFragment extends Fragment {
 
             Uri imagePath = Uri.parse(currentPhotoPath);
 
-            //selfieView.setImageBitmap(imageBitmap);
+            //additonalImageView.setImageBitmap(imageBitmap);
 
-            selfieView.setImageURI(imagePath);
-            selfieView.setVisibility(View.VISIBLE);
+            additonalImageView.setImageURI(imagePath);
+            additonalImageView.setVisibility(View.VISIBLE);
         }
     }
 

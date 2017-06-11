@@ -6,9 +6,7 @@
     android:scrollbars="none"
     tools:context="fhtw.bsa2.gafert_steiner.ue5_diaryapp.AddFragment">
 
-
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -35,7 +33,7 @@
                 android:foregroundGravity="center">
 
                 <RadioGroup
-                    android:id="@+id/emotion"
+                    android:id="@+id/emotionGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="0dp"
@@ -62,9 +60,7 @@
                     <RadioButton
                         android:id="@+id/happyButton"
                         android:layout_width="match_parent"
-
                         android:layout_height="match_parent"
-
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
@@ -163,22 +159,21 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/additionalInfo"
+                android:id="@+id/reasonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_rect_darkgrey"
+                android:background="@drawable/rounded_rect_darkgrey_accent_border"
                 android:ems="10"
                 android:hint="Reason"
                 android:padding="10dp" />
 
             <FrameLayout
-                android:id="@+id/cameraContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp">
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/selfie"
+                    android:id="@+id/additionalImageView"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:scaleType="centerCrop"
@@ -201,7 +196,6 @@
 
         </LinearLayout>
 
-
         <info.hoang8f.widget.FButton
             android:id="@+id/submitButton"
             android:layout_width="300dp"
@@ -210,7 +204,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="40dp"
-            android:text="Collect Feelings"
+            android:text="Collect Emotion"
             app:buttonColor="@color/colorAccent" />
 
         <FrameLayout
