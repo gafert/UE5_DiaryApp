@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="Leave me alone."
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="100"
+        android:title="Delete all entries"
+        app:showAsAction="never" />
 </menu>

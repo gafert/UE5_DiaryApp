@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rounded_rect_gradient_background"
         android:orientation="vertical">
 
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="70dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:text="No Reason"
                 android:visibility="visible" />

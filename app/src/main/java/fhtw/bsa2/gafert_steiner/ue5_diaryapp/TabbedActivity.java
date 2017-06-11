@@ -132,6 +132,13 @@ public class TabbedActivity extends AppCompatActivity {
             this.finish();
             return true;
         }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_delete) {
+            Toasty.success(this, "Deleted all entries", Toast.LENGTH_SHORT).show();
+            EmotionEntries emotionEntries = EmotionEntries.getInstance();
+            emotionEntries.deleteAll();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

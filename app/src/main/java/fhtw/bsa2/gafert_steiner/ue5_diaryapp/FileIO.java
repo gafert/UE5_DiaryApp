@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
-import com.github.mikephil.charting.charts.Chart;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,7 +12,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
 
 /**
  * Created by Fabian on 11.06.2017.
@@ -23,11 +20,11 @@ import java.net.URI;
 
 public class FileIO {
 
+    private static final String FILENAME = "documents.txt";
+    public static Context context;
     private static FileIO fileIOInstance;
     private static File dataFile;
-    private static final String FILENAME = "documents.txt";
     private final String TAG="FileIO";
-    public static Context context;
 
     private FileIO(){
 
@@ -46,27 +43,23 @@ public class FileIO {
         // Get the directory for the app's private pictures directory.
         dataFile = new File(context.getExternalFilesDir(
                 Environment.DIRECTORY_DOCUMENTS), FILENAME);
-
     }
 
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /* Checks if external storage is available to at least read */
     public static boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
+    public static void setContext(Context context) {
+        FileIO.context = context;
+    }
 
     public void writeEmotions(String jsonString){
         if(isExternalStorageWritable()){
@@ -117,7 +110,13 @@ public class FileIO {
         return emotionEntries;
     }
 
-    public static void setContext(Context context) {
-        FileIO.context = context;
+    public void deleteFiles() {
+        if (dataFile.exists()) {
+            dataFile.delete();
+        }
+
+        File photoDirectory = new File(context.getExternalFilesDir(
+                Environment.DIRECTORY_PICTURES).getPath());
+        photoDirectory.delete();
     }
 }

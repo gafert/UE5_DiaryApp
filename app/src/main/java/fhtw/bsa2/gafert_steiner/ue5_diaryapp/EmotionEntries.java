@@ -3,11 +3,8 @@ package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,20 +39,20 @@ public class EmotionEntries {
         return entries;
     }
 
-    public void addEmotion(EmotionEntry newEntry){
+    public void addEmotion(EmotionEntry newEntry) {
 
-        int i=0;
+        int i = 0;
         boolean duplicate = false;
-        for(EmotionEntry entry: entryList){
-            if(newEntry.getEntryDate().equals(entry.entryDate)){
-                duplicate=true;
+        for (EmotionEntry entry : entryList) {
+            if (newEntry.getEntryDate().equals(entry.entryDate)) {
+                duplicate = true;
                 break;
             }
             i++;
         }
-        if(duplicate==true){
+        if (duplicate == true) {
             entryList.set(i, newEntry);
-        }else{
+        } else {
             entryList.add(newEntry);
         }
 
@@ -92,18 +89,12 @@ public class EmotionEntries {
         this.listener = listener;
     }
 
-    public interface EntriesChangedListener {
-        // These methods are the different events and
-        // need to pass relevant arguments related to the event triggered
-        void onChanged();
-    }
-
     public void setEntryList(ArrayList<EmotionEntry> entryList) {
         EmotionEntries.entryList = entryList;
         refreshReverseList();
     }
 
-    public void refreshReverseList(){
+    public void refreshReverseList() {
         entryListReversed = (ArrayList<EmotionEntry>) entryList.clone();
 
         Collections.sort(entryList, new Comparator<EmotionEntry>() {
@@ -111,5 +102,28 @@ public class EmotionEntries {
                 return o1.getEntryDate().compareTo(o2.getEntryDate());
             }
         });
+    }
+
+    public void deleteAll() {
+        entryList = null;
+        entryListReversed = null;
+        entries = null;
+
+        try {
+            FileIO IO = FileIO.getFileIOInstance();
+            IO.deleteFiles();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Fire the custom listener
+        if (listener != null)
+            listener.onChanged();   // Call listener
+    }
+
+    public interface EntriesChangedListener {
+        // These methods are the different events and
+        // need to pass relevant arguments related to the event triggered
+        void onChanged();
     }
 }

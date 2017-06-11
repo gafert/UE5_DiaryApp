@@ -69,11 +69,15 @@ public class AddFragment extends Fragment {
         additonalImageView = (ImageView) rootView.findViewById(R.id.additionalImageView);
         reasonTextView = (EditText) rootView.findViewById(R.id.reasonTextView);
 
-        // Set Current Date with format to TextView
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d. MMM yyyy");
-        final String currentDateAndTime = simpleDateFormat.format(new Date());
-        date = new Date();
-        dateTextView.setText(currentDateAndTime);
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d. MMM yyyy");
+            String dateString = simpleDateFormat.format(new Date());
+            date = simpleDateFormat.parse(dateString);
+
+            dateTextView.setText(dateString);
+        } catch (ParseException e) {
+            // Could not parse
+        }
 
         emotionPicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
