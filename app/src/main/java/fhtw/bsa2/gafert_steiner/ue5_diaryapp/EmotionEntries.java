@@ -1,10 +1,16 @@
 package fhtw.bsa2.gafert_steiner.ue5_diaryapp;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import static fhtw.bsa2.gafert_steiner.ue5_diaryapp.GlobalVariables.listType;
 
 public class EmotionEntries {
 
@@ -28,7 +34,7 @@ public class EmotionEntries {
         return entries;
     }
 
-    public void addEmotion(EmotionEntry newEntry) {
+    public void addEmotion(EmotionEntry newEntry){
         //TODO: Check if today was already entered a day. If so overwrite today´s entry with a new one
         entryList.add(newEntry);
 
@@ -36,10 +42,19 @@ public class EmotionEntries {
         if (listener != null)
             listener.onChanged();   // Call listener
 
+        //Convert ArrayList of Emotion Entries to Json and save it to local file
+
         Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<EmotionEntry>>() {
-        }.getType();
+
         String json = gson.toJson(entryList, listType);
+        Log.d("JSON", json);
+
+        try {
+            FileIO IO = FileIO.getFileIOInstance();
+            IO.writeEmotions(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Assign the listener implementing events interface that will receive the events
@@ -51,5 +66,9 @@ public class EmotionEntries {
         // These methods are the different events and
         // need to pass relevant arguments related to the event triggered
         void onChanged();
+    }
+
+    public static void setEntryList(ArrayList<EmotionEntry> entryList) {
+        EmotionEntries.entryList = entryList;
     }
 }

@@ -11,6 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import devlight.io.library.ntb.NavigationTabBar;
@@ -37,6 +41,25 @@ public class TabbedActivity extends AppCompatActivity {
 
         setTitle(TITLE[0]);     // Set title to first fragment title
 
+        try {
+            FileIO IO = FileIO.getFileIOInstance();
+            IO.setContext(this.getBaseContext());
+            String emotionJson = IO.readEmotions();
+
+            if(emotionJson!=null){
+                Gson gson = new Gson();
+
+                EmotionEntries entries = EmotionEntries.getInstance();
+                ArrayList<EmotionEntry> entryList = gson.fromJson(emotionJson, GlobalVariables.listType);
+                entries.setEntryList(entryList);
+            }
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Change the title on fragment change
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -46,7 +69,6 @@ public class TabbedActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 setTitle(TITLE[position]);  // Set AppBar title to active fragment title
-                //TODO: Read From File
             }
 
             @Override
