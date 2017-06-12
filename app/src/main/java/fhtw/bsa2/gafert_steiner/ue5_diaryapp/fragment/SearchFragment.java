@@ -30,9 +30,19 @@ public class SearchFragment extends Fragment {
         arrayAdapter = new EmotionArrayAdapter(getContext(), R.layout.emotion_list_item);
         listView.setAdapter(arrayAdapter);
 
-        entries = EmotionEntries.getInstance();
 
-        for (EmotionEntry entry : EmotionEntries.getEntriesReversed()) {
+        entries = EmotionEntries.getInstance();
+        entries.setEntriesChangeListener(new EmotionEntries.EntriesChangedListener() {
+            @Override
+            public void onChanged() {
+                arrayAdapter.clear();
+                for (EmotionEntry entry : entries.getEntriesReversed()) {
+                    arrayAdapter.add(entry);
+                }
+            }
+        });
+
+        for (EmotionEntry entry : entries.getEntriesReversed()) {
             arrayAdapter.add(entry);
         }
 
@@ -56,7 +66,7 @@ public class SearchFragment extends Fragment {
                 String text = s.toString();
                 //ArrayList<EmotionEntry> resultEntries = new ArrayList<EmotionEntry>();
 
-                for (EmotionEntry entry : EmotionEntries.getEntriesReversed()) {
+                for (EmotionEntry entry : entries.getEntriesReversed()) {
                     if (entry.getReason().toLowerCase().contains(text.toLowerCase())) {
                         arrayAdapter.add(entry);
                     }

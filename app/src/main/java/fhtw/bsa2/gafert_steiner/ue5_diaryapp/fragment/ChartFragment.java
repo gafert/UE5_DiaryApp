@@ -68,7 +68,7 @@ public class ChartFragment extends Fragment {
     }
 
     private void drawElements() {
-        ArrayList<EmotionEntry> data = EmotionEntries.getEntries();         // Gets the data from a save file or sth
+        ArrayList<EmotionEntry> data = emotionEntries.getEntries();         // Gets the data from a save file or sth
 
         // Only draws chart and circles if there is data
         if (data != null && !data.isEmpty()) {
