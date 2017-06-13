@@ -216,6 +216,7 @@ public class AddFragment extends Fragment {
                         "fhtw.bsa2.gafert_steiner.ue5_diaryapp.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                takePictureIntent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, 1024 * 1024);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
