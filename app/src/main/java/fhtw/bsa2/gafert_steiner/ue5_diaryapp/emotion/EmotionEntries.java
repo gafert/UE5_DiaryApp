@@ -5,7 +5,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,19 +27,31 @@ public class EmotionEntries {
         listener = new ArrayList<EntriesChangedListener>();
     }
 
-    public ArrayList<EmotionEntry> getEntries() {
-        return entryList;
-    }
-
-    public ArrayList<EmotionEntry> getEntriesReversed() {
-        return entryListReversed;
-    }
-
     public static EmotionEntries getInstance() {
         if (entries == null) {
             entries = new EmotionEntries();
         }
         return entries;
+    }
+
+    public ArrayList<EmotionEntry> getEntries() {
+        Collections.sort(entryList, new Comparator<EmotionEntry>() {
+            public int compare(EmotionEntry o1, EmotionEntry o2) {
+                return o1.getEntryDate().compareTo(o2.getEntryDate());
+            }
+        });
+        return entryList;
+    }
+
+    public ArrayList<EmotionEntry> getEntriesReversed() {
+        entryListReversed = (ArrayList<EmotionEntry>) entryList.clone();
+
+        Collections.sort(entryListReversed, new Comparator<EmotionEntry>() {
+            public int compare(EmotionEntry o1, EmotionEntry o2) {
+                return o2.getEntryDate().compareTo(o1.getEntryDate());
+            }
+        });
+        return entryListReversed;
     }
 
     public void addEmotion(EmotionEntry newEntry) {
@@ -62,19 +73,15 @@ public class EmotionEntries {
 
         Collections.sort(entryList, new Comparator<EmotionEntry>() {
             public int compare(EmotionEntry o1, EmotionEntry o2) {
-                return o2.getEntryDate().compareTo(o1.getEntryDate());
+                return o1.getEntryDate().compareTo(o2.getEntryDate());
             }
         });
-
-
-        refreshReverseList();
 
         // Fire the custom listener
         if (listener != null){
             for(EntriesChangedListener oneListener: listener)
                 oneListener.onChanged();   // Call listener
         }
-
 
         //Convert ArrayList of Emotion Entries to Json and save it to local file
 
@@ -93,17 +100,6 @@ public class EmotionEntries {
 
     public void setEntryList(ArrayList<EmotionEntry> entryList) {
         this.entryList = entryList;
-        refreshReverseList();
-    }
-
-    public void refreshReverseList() {
-        entryListReversed = (ArrayList<EmotionEntry>) entryList.clone();
-
-        Collections.sort(entryList, new Comparator<EmotionEntry>() {
-            public int compare(EmotionEntry o1, EmotionEntry o2) {
-                return o1.getEntryDate().compareTo(o2.getEntryDate());
-            }
-        });
     }
 
     public void deleteAll() {

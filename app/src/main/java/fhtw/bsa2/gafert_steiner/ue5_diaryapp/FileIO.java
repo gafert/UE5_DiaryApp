@@ -13,26 +13,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * Created by Fabian on 11.06.2017.
- */
-
-
 public class FileIO {
-
     private static final String FILENAME = "documents.txt";
     public static Context context;
     private static FileIO fileIOInstance;
     private static File dataFile;
-    private final String TAG="FileIO";
+    private final String TAG = "FileIO";
 
-    private FileIO(){
-
+    private FileIO() {
     }
 
-
     public static FileIO getFileIOInstance() throws IOException {
-        if(fileIOInstance==null){
+        if (fileIOInstance == null) {
             fileIOInstance = new FileIO();
         }
 
@@ -61,21 +53,21 @@ public class FileIO {
         FileIO.context = context;
     }
 
-    public void writeEmotions(String jsonString){
-        if(isExternalStorageWritable()){
+    public void writeEmotions(String jsonString) {
+        if (isExternalStorageWritable()) {
             try {
                 getEmotionEntriesStorageFile();
 
-                if(dataFile.exists()){
+                if (dataFile.exists()) {
                     dataFile.delete();
                 }
 
                 getEmotionEntriesStorageFile();
                 dataFile.createNewFile();
 
-                Log.d(TAG,"writeToFile(): " +jsonString);
+                Log.d(TAG, "writeToFile(): " + jsonString);
 
-                BufferedWriter bw = new BufferedWriter(new FileWriter(dataFile,true));
+                BufferedWriter bw = new BufferedWriter(new FileWriter(dataFile, true));
                 PrintWriter writer = new PrintWriter(bw);
 
                 writer.println(jsonString);
@@ -87,16 +79,14 @@ public class FileIO {
                 e.printStackTrace();
             }
         }
-
     }
 
-    public String readEmotions(){
-
+    public String readEmotions() {
         String emotionEntries = null;
-        if(isExternalStorageReadable()) {
+        if (isExternalStorageReadable()) {
             try {
                 getEmotionEntriesStorageFile();
-                if(dataFile.exists() && dataFile.length()!=0) {
+                if (dataFile.exists() && dataFile.length() != 0) {
                     BufferedReader reader = new BufferedReader(new FileReader(dataFile));
                     emotionEntries = reader.readLine();
                     reader.close();

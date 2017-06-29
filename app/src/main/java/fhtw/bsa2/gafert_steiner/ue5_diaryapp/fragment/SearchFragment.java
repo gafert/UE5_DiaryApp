@@ -30,7 +30,6 @@ public class SearchFragment extends Fragment {
         arrayAdapter = new EmotionArrayAdapter(getContext(), R.layout.emotion_list_item);
         listView.setAdapter(arrayAdapter);
 
-
         entries = EmotionEntries.getInstance();
         entries.setEntriesChangeListener(new EmotionEntries.EntriesChangedListener() {
             @Override
